@@ -14,31 +14,31 @@ This task focuses on implementing the input area where users can type their mess
 - React Hook Form (optional for form handling)
 
 ## Steps
-1. Create the InputArea component:
+1. ✅ Create the InputArea component:
    - Create file: `src/components/chat/InputArea.tsx`
    - Implement a form with textarea/input and submit button
    - Style the component using shadcn/ui and Tailwind CSS
    - Add proper spacing and responsive layout
 
-2. Implement form handling:
+2. ✅ Implement form handling:
    - Create state for input value
    - Handle input changes
    - Implement form submission
    - Clear input after submission
    - Prevent empty message submission
 
-3. Add message submission functionality:
+3. ✅ Add message submission functionality:
    - Create handleSubmit function
    - Integrate with message sending callback (placeholder for now)
    - Validate input before submission
    - Handle submission loading state
 
-4. Implement keyboard shortcuts:
+4. ✅ Implement keyboard shortcuts:
    - Add Enter key for submission (with shift+Enter for new line)
    - Support for other common chat shortcuts
    - Ensure accessible keyboard interactions
 
-5. Add UI feedback:
+5. ✅ Add UI feedback:
    - Implement focus states for the input
    - Add loading spinner or disabled state during submission
    - Include hover states for the submit button

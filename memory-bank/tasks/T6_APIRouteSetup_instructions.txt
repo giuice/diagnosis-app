@@ -15,55 +15,30 @@ DeepSeek's API includes built-in context caching that automatically optimizes re
 - Environment configuration for DeepSeek API key and URL
 
 ## Steps
-1. Create the API route:
+1. ✅ Create the API route:
    - Create file: `src/app/api/diagnose/route.ts` (App Router)
    - Set up the Next.js API route handler function
    - Configure CORS and request validation
 
-2. Install and configure OpenAI SDK:
+2. ✅ Install and configure OpenAI SDK:
    - Install OpenAI SDK: `npm install openai`
    - Import OpenAI: `import OpenAI from 'openai'`
-   - Initialize OpenAI client with DeepSeek config:
+   - Initialize OpenAI client with DeepSeek config
 
-```typescript
-const openai = new OpenAI({
-  baseURL: process.env.DEEPSEEK_API_URL || 'https://api.deepseek.com',
-  apiKey: process.env.DEEPSEEK_API_KEY,
-});
-```
-
-3. Implement request handling:
+3. ✅ Implement request handling:
    - Parse incoming request body
    - Validate user input and parameters
    - Set up proper error handling
    - Implement rate limiting (optional)
 
-4. Create DeepSeek communication logic:
+4. ✅ Create DeepSeek communication logic:
    - Format user messages for DeepSeek, including the full conversation history.
-   - Implement message history handling:
-     ```typescript
-     // Example message structure for multi-round conversation leveraging context caching
-     // On subsequent requests, include the full history:
-     const messages = [
-       { role: 'system', content: systemPrompt },
-       { role: 'user', content: 'First user message' },
-       { role: 'assistant', content: 'First assistant response' },
-       { role: 'user', content: 'Second user message' } // Current message
-       // ... continue adding user/assistant pairs
-     ];
-     ```
-   - Call DeepSeek API:
-     ```typescript
-     const completion = await openai.chat.completions.create({
-       messages, // Pass the full, ordered message history
-       model: 'deepseek-chat',
-     });
-     ```
-   - Store received assistant response in conversation history for the next request.
-   - Handle response processing.
-   - Implement error handling for API failures.
+   - Call DeepSeek API
+   - Store received assistant response in conversation history
+   - Handle response processing
+   - Implement error handling for API failures
 
-5. Implement response handling:
+5. ✅ Implement response handling:
    - Format DeepSeek response for the frontend
    - Add proper status codes
    - Implement response streaming if needed

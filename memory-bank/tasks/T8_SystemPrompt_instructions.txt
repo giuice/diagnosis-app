@@ -1,59 +1,44 @@
 # T8_SystemPrompt Instructions
 
 ## Objective
-Create a well-structured system prompt to guide the AI's behavior for medical diagnosis, ensuring accurate, helpful, and appropriate responses to user health inquiries.
+Create a detailed, high-performing system prompt to guide the AI assistant's diagnostic behavior.
 
 ## Context
 Parent Implementation Plan: IP2_APIIntegration
-This task focuses on developing the system prompt that will guide the AI assistant in providing diagnostic conversation. The system prompt is critical for setting the tone, approach, and boundaries of the AI's responses to medical inquiries.
+This task focuses on designing and implementing the system prompt that will instruct the AI assistant on how to conduct the diagnostic conversation.
 
 ## Dependencies
-- T6_APIRouteSetup (will include the system prompt)
-- OpenAI API documentation
+- T6_APIRouteSetup (will use the system prompt)
+- T7_EnvironmentConfig (API keys)
 
 ## Steps
-1. Design the core system prompt:
-   - Create file: `src/lib/prompts/systemPrompt.ts`
-   - Define the role and identity of the AI assistant
-   - Set boundaries for medical advice
-   - Establish conversation style and tone
-   - Include necessary disclaimers
+1. ✅ Draft initial system prompt:
+   - Define AI assistant persona and tone
+   - Outline diagnostic workflow
+   - Include instructions for question formulation and analysis
 
-2. Implement diagnostic guidance:
-   - Define a structured approach to diagnosis
-   - Include questions the AI should ask about symptoms
-   - Guide the AI on following up with relevant inquiries
-   - Set parameters for severity assessment
+2. ✅ Refine prompt wording:
+   - Improve clarity and specificity
+   - Add examples if needed
+   - Optimize for DeepSeek/OpenAI API
 
-3. Add safety measures:
-   - Include instructions for handling emergency situations
-   - Set boundaries on prescribing medications
-   - Define when to recommend seeking professional care
-   - Include language about limitations of AI diagnosis
+3. ✅ Implement prompt in code:
+   - Create `src/lib/prompts/systemPrompt.ts`
+   - Export prompt as a string/template
+   - Use placeholders for dynamic content
 
-4. Implement conversation management:
-   - Add instructions for maintaining conversation context
-   - Define conciseness and clarity guidelines
-   - Include guidance for explaining medical terms
-   - Add instructions for summarizing findings
-
-5. Test and refine the prompt:
-   - Create test scenarios with different medical inquiries
-   - Evaluate responses for accuracy and appropriateness
-   - Refine prompt based on test results
-   - Document any limitations discovered
+4. ✅ Test prompt integration:
+   - Verify prompt is sent correctly in API requests
+   - Adjust based on AI response quality
 
 ## Expected Output
-A comprehensive system prompt that:
-- Guides the AI to provide helpful diagnostic conversation
-- Sets appropriate boundaries for medical advice
-- Maintains a professional and empathetic tone
-- Includes necessary safety measures and disclaimers
-- Produces consistently helpful and appropriate responses
+A well-structured system prompt that:
+- Guides the AI through a step-by-step diagnostic process
+- Produces relevant, clear, and actionable responses
+- Can be dynamically customized with user input
+- Is integrated into API requests
 
 ## Notes
-- The system prompt is crucial for the quality of the diagnosis
-- Consider consulting medical guidelines for accuracy
-- Balance between helpfulness and safety is essential
-- The prompt should be clear about the AI's limitations
-- Consider legal and ethical implications of medical advice
+- Prompt quality is critical for AI performance
+- Iterative refinement may be needed based on testing
+- Consider prompt length limits for API calls
