@@ -1,0 +1,61 @@
+# T19_SessionNavigation Instructions
+
+## Objective
+Implement navigation functionality between the active chat interface and history view, allowing users to seamlessly switch between current and past diagnostic sessions.
+
+## Context
+Parent Implementation Plan: IP4_DiagnosticHistory
+This task focuses on creating the navigation system that lets users move between the active chat and the history view, providing a cohesive user experience across the application.
+
+## Dependencies
+- T1_ChatContainer (active chat interface)
+- T16_HistoryView (history listing)
+- T17_SessionViewer (session viewing)
+- shadcn/ui components
+- Tailwind CSS
+
+## Steps
+1. Create navigation component:
+   - Create file: `src/components/navigation/SessionNavigation.tsx`
+   - Implement tab or switch interface
+   - Add active indicators for current view
+   - Create responsive layout for different device sizes
+
+2. Implement state management for navigation:
+   - Create view state tracking
+   - Implement view switching logic
+   - Add URL-based navigation (optional)
+   - Preserve state between view switches
+
+3. Add navigation triggers:
+   - Implement click handlers for tab/switch interface
+   - Create keyboard shortcuts for navigation
+   - Add breadcrumb navigation for nested views
+   - Implement back button functionality
+
+4. Create smooth transitions:
+   - Add animation between view changes
+   - Implement loading states for view transitions
+   - Create proper focus management
+   - Ensure scroll position is preserved when appropriate
+
+5. Integrate with layout:
+   - Add navigation to main application layout
+   - Ensure proper mobile adaptability
+   - Create consistent styling with application theme
+   - Implement proper ARIA roles for accessibility
+
+## Expected Output
+A navigation system that:
+- Allows users to switch between active chat and history views
+- Provides clear visual indication of current view
+- Maintains state appropriately during navigation
+- Integrates seamlessly with the application layout
+- Works well across different device sizes
+
+## Notes
+- Focus on creating an intuitive navigation experience
+- Consider how to handle unsaved changes during navigation
+- Ensure navigation is accessible via keyboard
+- Add appropriate animations without being distracting
+- Consider URL-based routing for direct linking to views

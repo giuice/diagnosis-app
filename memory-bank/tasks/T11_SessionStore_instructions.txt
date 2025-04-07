@@ -1,0 +1,59 @@
+# T11_SessionStore Instructions
+
+## Objective
+Create a Zustand store to manage session state, including current session data and functionality for session operations.
+
+## Context
+Parent Implementation Plan: IP3_SessionManagement
+This task focuses on implementing the core state management for diagnostic sessions using Zustand. The session store will maintain the current session state, provide methods for session operations, and integrate with local storage for persistence.
+
+## Dependencies
+- T4_ChatStateManagement (will integrate with this)
+- Zustand for state management
+- localStorage API
+
+## Steps
+1. Set up the session store:
+   - Create file: `src/store/useSessionStore.ts`
+   - Define session types and interfaces
+   - Create store with necessary state and actions
+   - Add persist middleware for localStorage integration
+
+2. Implement session state:
+   - Add current session data structure
+   - Include session metadata (ID, timestamp, title)
+   - Create session status tracking
+   - Add session history array reference
+
+3. Create session management functions:
+   - Implement new session creation
+   - Add function to save current session
+   - Create session loading functionality
+   - Add session deletion capability
+
+4. Add session persistence:
+   - Implement localStorage saving/loading
+   - Add automatic saving at intervals
+   - Create session serialization/deserialization
+   - Implement storage limit handling
+
+5. Connect with chat state:
+   - Create interface for chat state integration
+   - Implement message history transfer
+   - Set up clear methods for new sessions
+   - Add transition handling between sessions
+
+## Expected Output
+A complete session management store that:
+- Maintains current session state
+- Provides actions for session operations (new, save, load)
+- Integrates with localStorage for persistence
+- Connects with chat state management
+- Handles session metadata and organization
+
+## Notes
+- Ensure proper typing for all state and actions
+- Consider storage size limitations when implementing persistence
+- Use appropriate serialization to prevent data loss
+- Consider adding session encryption for sensitive medical data (optional)
+- Implement graceful degradation when localStorage is unavailable

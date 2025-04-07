@@ -1,0 +1,59 @@
+# T12_NewDiagnosisButton Instructions
+
+## Objective
+Implement a button component that allows users to start a new diagnostic session while saving the current session to history.
+
+## Context
+Parent Implementation Plan: IP3_SessionManagement
+This task focuses on creating the "New Diagnosis" button component and its associated functionality, enabling users to start fresh diagnostic conversations while preserving their history.
+
+## Dependencies
+- T11_SessionStore (provides the session management functionality)
+- T4_ChatStateManagement (needs to be cleared for new sessions)
+- shadcn/ui components
+- Tailwind CSS
+
+## Steps
+1. Create the button component:
+   - Create file: `src/components/session/NewDiagnosisButton.tsx`
+   - Implement button UI using shadcn/ui Button component
+   - Add appropriate icon (e.g., plus sign or document)
+   - Style with Tailwind CSS for consistency
+
+2. Implement click handler:
+   - Create function to handle new session creation
+   - Add confirmation dialog if current session has content
+   - Connect to session store for saving current session
+   - Implement functionality to reset chat state
+
+3. Add session transition logic:
+   - Save current session to history before clearing
+   - Generate new session ID and metadata
+   - Implement smooth transition between sessions
+   - Add success notification or feedback
+
+4. Integrate with layout:
+   - Add button to appropriate location in UI
+   - Consider placement for optimal visibility and access
+   - Ensure mobile responsiveness
+   - Add keyboard shortcut (optional)
+
+5. Implement accessibility:
+   - Add proper ARIA attributes
+   - Ensure keyboard navigation
+   - Include appropriate focus states
+   - Add descriptive tooltip
+
+## Expected Output
+A functional New Diagnosis button that:
+- Visually integrates with the app's design
+- Saves the current session before starting a new one
+- Creates a new, empty diagnostic session
+- Provides appropriate user feedback
+- Is accessible and easy to use
+
+## Notes
+- Consider user confirmation for non-empty sessions to prevent accidental data loss
+- Ensure smooth visual transition between sessions
+- Test on various devices and screen sizes
+- Consider adding "untitled" or timestamp-based naming for automatic session naming

@@ -1,0 +1,60 @@
+# T20_SessionResumption Instructions
+
+## Objective
+Implement functionality to resume a past diagnostic session, allowing users to continue a previous conversation with the AI assistant.
+
+## Context
+Parent Implementation Plan: IP4_DiagnosticHistory
+This task focuses on creating the capability to load a past diagnostic session into the active chat interface, enabling users to continue conversations that were previously saved to history.
+
+## Dependencies
+- T11_SessionStore (provides session data)
+- T4_ChatStateManagement (needs to be updated with resumed session)
+- T17_SessionViewer (integration point for resume button)
+- T1_ChatContainer (target for resumed session)
+
+## Steps
+1. Create session resumption functionality:
+   - Create file: `src/lib/utils/sessionResumption.ts`
+   - Implement function to extract session data
+   - Create transformation utilities for session format
+   - Add validation for resumable sessions
+
+2. Implement resume button component:
+   - Create file: `src/components/history/ResumeButton.tsx`
+   - Implement button UI with proper icon
+   - Add confirmation dialog if current session has content
+   - Create loading state during resumption
+
+3. Create session state handling:
+   - Implement function to load session into chat state
+   - Add message history transfer functionality
+   - Create metadata update for resumed sessions
+   - Implement handling for continuation indicators
+
+4. Add transition handling:
+   - Create smooth transition to chat interface
+   - Implement UI feedback for successful resumption
+   - Add auto-scroll to latest message
+   - Create focus management for input field
+
+5. Implement error handling:
+   - Add validation for corrupted or incompatible sessions
+   - Create error feedback for failed resumption
+   - Implement recovery mechanisms for partial failures
+   - Add logging for debugging issues
+
+## Expected Output
+A session resumption system that:
+- Allows users to continue previous diagnostic conversations
+- Handles the transition from history view to active chat
+- Preserves all previous messages and context
+- Provides clear feedback during the resumption process
+- Manages edge cases and errors appropriately
+
+## Notes
+- Consider how to handle the current active session when resuming
+- Add visual indicator that the session is a continuation
+- Ensure all message history and context is properly transferred
+- Consider adding a timestamp or marker for when the session was resumed
+- Test with various session lengths and content types

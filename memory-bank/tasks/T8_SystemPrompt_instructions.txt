@@ -1,0 +1,59 @@
+# T8_SystemPrompt Instructions
+
+## Objective
+Create a well-structured system prompt to guide the AI's behavior for medical diagnosis, ensuring accurate, helpful, and appropriate responses to user health inquiries.
+
+## Context
+Parent Implementation Plan: IP2_APIIntegration
+This task focuses on developing the system prompt that will guide the AI assistant in providing diagnostic conversation. The system prompt is critical for setting the tone, approach, and boundaries of the AI's responses to medical inquiries.
+
+## Dependencies
+- T6_APIRouteSetup (will include the system prompt)
+- OpenAI API documentation
+
+## Steps
+1. Design the core system prompt:
+   - Create file: `src/lib/prompts/systemPrompt.ts`
+   - Define the role and identity of the AI assistant
+   - Set boundaries for medical advice
+   - Establish conversation style and tone
+   - Include necessary disclaimers
+
+2. Implement diagnostic guidance:
+   - Define a structured approach to diagnosis
+   - Include questions the AI should ask about symptoms
+   - Guide the AI on following up with relevant inquiries
+   - Set parameters for severity assessment
+
+3. Add safety measures:
+   - Include instructions for handling emergency situations
+   - Set boundaries on prescribing medications
+   - Define when to recommend seeking professional care
+   - Include language about limitations of AI diagnosis
+
+4. Implement conversation management:
+   - Add instructions for maintaining conversation context
+   - Define conciseness and clarity guidelines
+   - Include guidance for explaining medical terms
+   - Add instructions for summarizing findings
+
+5. Test and refine the prompt:
+   - Create test scenarios with different medical inquiries
+   - Evaluate responses for accuracy and appropriateness
+   - Refine prompt based on test results
+   - Document any limitations discovered
+
+## Expected Output
+A comprehensive system prompt that:
+- Guides the AI to provide helpful diagnostic conversation
+- Sets appropriate boundaries for medical advice
+- Maintains a professional and empathetic tone
+- Includes necessary safety measures and disclaimers
+- Produces consistently helpful and appropriate responses
+
+## Notes
+- The system prompt is crucial for the quality of the diagnosis
+- Consider consulting medical guidelines for accuracy
+- Balance between helpfulness and safety is essential
+- The prompt should be clear about the AI's limitations
+- Consider legal and ethical implications of medical advice

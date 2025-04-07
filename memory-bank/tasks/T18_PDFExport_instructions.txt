@@ -1,0 +1,60 @@
+# T18_PDFExport Instructions
+
+## Objective
+Implement functionality to export diagnostic sessions to PDF format, allowing users to save, share, and print their conversations with the AI assistant.
+
+## Context
+Parent Implementation Plan: IP4_DiagnosticHistory
+This task focuses on creating the PDF export functionality, which will convert a diagnostic session into a professionally formatted PDF document that includes the conversation history and relevant metadata.
+
+## Dependencies
+- T11_SessionStore (provides session data)
+- T17_SessionViewer (integration point for export button)
+- html2pdf.js or jsPDF library
+- React components for triggering export
+
+## Steps
+1. Set up PDF generation library:
+   - Install selected PDF library: `npm install html2pdf.js` or `npm install jspdf`
+   - Create file: `src/lib/utils/pdfExport.ts`
+   - Implement core export functionality
+   - Add type definitions and interfaces
+
+2. Design PDF template:
+   - Create HTML/CSS template for PDF output
+   - Define header with logo and session metadata
+   - Create message formatting for conversation
+   - Add footer with timestamp and page numbers
+
+3. Implement PDF generation function:
+   - Create function to convert session to PDF format
+   - Add options for paper size and orientation
+   - Implement proper styling and formatting
+   - Add error handling for generation process
+
+4. Create export button component:
+   - Create file: `src/components/history/ExportButton.tsx`
+   - Implement button UI with proper icon
+   - Add loading/processing state
+   - Create success and error feedback
+
+5. Add export functionality integration:
+   - Connect export button to generation function
+   - Implement filename generation based on session
+   - Add download trigger functionality
+   - Create export options menu (optional)
+
+## Expected Output
+A complete PDF export system that:
+- Generates professional-looking PDF documents from diagnostic sessions
+- Includes all conversation history with proper formatting
+- Shows relevant session metadata in the document
+- Provides a simple user interface for triggering exports
+- Handles errors and provides appropriate feedback
+
+## Notes
+- Consider browser compatibility for PDF generation
+- Ensure proper formatting of medical terminology
+- Test with various session lengths and content types
+- Consider adding page breaks at logical points in conversation
+- Implement proper error handling for failed exports

@@ -1,0 +1,60 @@
+# T16_HistoryView Instructions
+
+## Objective
+Create a history view component that displays a list of past diagnostic sessions, allowing users to browse, select, and manage their session history.
+
+## Context
+Parent Implementation Plan: IP4_DiagnosticHistory
+This task focuses on implementing the UI component that displays the list of past diagnostic sessions, with appropriate metadata and selection capabilities.
+
+## Dependencies
+- T11_SessionStore (provides session data)
+- T14_SessionMetadata (provides session metadata for display)
+- shadcn/ui components
+- Tailwind CSS
+
+## Steps
+1. Create the history view component:
+   - Create file: `src/components/history/HistoryView.tsx`
+   - Implement main component structure
+   - Add tab or navigation between active chat and history
+   - Create responsive layout for different device sizes
+
+2. Implement session list:
+   - Create session list component
+   - Implement session item components with metadata
+   - Add empty state for when no sessions exist
+   - Implement sorting options (date, title, etc.)
+
+3. Add session selection:
+   - Implement click handler for session selection
+   - Add visual indicator for selected session
+   - Create session preview functionality
+   - Implement keyboard navigation
+
+4. Create session management UI:
+   - Add delete functionality with confirmation
+   - Implement session export button
+   - Add session renaming capability (optional)
+   - Create batch operations UI (optional)
+
+5. Implement filtering and search:
+   - Add search input for finding sessions
+   - Implement filtering by date ranges
+   - Create clear search/filter functionality
+   - Add pagination for large session lists
+
+## Expected Output
+A user-friendly history view component that:
+- Displays past diagnostic sessions in an organized list
+- Shows relevant metadata for each session
+- Provides selection and management capabilities
+- Integrates with the overall application UI
+- Supports filtering and searching sessions
+
+## Notes
+- Focus on making the history view intuitive and easy to navigate
+- Consider implementing virtual scrolling for performance with many sessions
+- Ensure all actions have confirmation for destructive operations
+- Make sure the history view is responsive on mobile devices
+- Consider accessibility for keyboard navigation and screen readers

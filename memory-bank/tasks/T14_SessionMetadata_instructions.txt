@@ -1,0 +1,59 @@
+# T14_SessionMetadata Instructions
+
+## Objective
+Implement functionality to manage session metadata such as timestamps, titles, IDs, and other identifying information for diagnostic sessions.
+
+## Context
+Parent Implementation Plan: IP3_SessionManagement
+This task focuses on creating the utilities and structures needed to maintain and display metadata for diagnostic sessions, enabling better organization and identification of saved sessions.
+
+## Dependencies
+- T11_SessionStore (will use the metadata)
+- T13_LocalStoragePersistence (will store metadata)
+- Date/time utilities
+
+## Steps
+1. Define session metadata structure:
+   - Create file: `src/lib/types/sessionTypes.ts`
+   - Define interfaces for session metadata
+   - Include fields for timestamp, title, ID, etc.
+   - Add typing for metadata operations
+
+2. Implement metadata generation:
+   - Create utility for generating unique session IDs
+   - Implement timestamp generation and formatting
+   - Add function for automatic title generation
+   - Create utilities for metadata validation
+
+3. Add metadata management:
+   - Implement functions to update session metadata
+   - Create utilities for sorting by metadata
+   - Add filtering by metadata properties
+   - Implement search functionality based on metadata
+
+4. Create display formatting:
+   - Add functions to format timestamps for display
+   - Implement title truncation and formatting
+   - Create utilities for displaying session duration
+   - Add relative time formatting (e.g., "2 days ago")
+
+5. Connect with session operations:
+   - Integrate metadata generation with new sessions
+   - Add metadata updates during session operations
+   - Implement metadata in session listings
+   - Ensure metadata persistence with sessions
+
+## Expected Output
+A comprehensive metadata system that:
+- Provides clear identification for each session
+- Includes useful timestamps and title information
+- Enables sorting and filtering of sessions
+- Integrates with the session management system
+- Enhances the user experience with informative display
+
+## Notes
+- Consider time zone handling for timestamps
+- Ensure unique IDs even in offline/concurrent creation
+- User-friendly titles should aid in quick session identification
+- Consider adding custom tagging capability (optional enhancement)
+- Ensure metadata is lightweight to minimize storage impact

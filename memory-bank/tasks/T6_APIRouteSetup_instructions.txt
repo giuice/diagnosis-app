@@ -1,0 +1,89 @@
+# T6_APIRouteSetup Instructions
+
+## Objective
+Create a secure API route for communicating with the **DeepSeek API** (compatible with OpenAI SDK) to handle diagnostic conversations between the user and AI assistant.
+
+## Context
+Parent Implementation Plan: IP2_APIIntegration
+This task focuses on implementing the server-side API route using Next.js API routes to securely communicate with DeepSeek's API via the OpenAI SDK. This route will handle sending user messages to DeepSeek and returning AI responses to the frontend.
+
+DeepSeek's API includes built-in context caching that automatically optimizes repeat content across requests, particularly useful for maintaining conversation history. The caching system automatically detects overlapping prefixes between requests and serves them from cache, improving response times and reducing API costs.
+
+## Dependencies
+- Next.js API routes
+- OpenAI SDK (compatible with DeepSeek)
+- Environment configuration for DeepSeek API key and URL
+
+## Steps
+1. Create the API route:
+   - Create file: `src/app/api/diagnose/route.ts` (App Router)
+   - Set up the Next.js API route handler function
+   - Configure CORS and request validation
+
+2. Install and configure OpenAI SDK:
+   - Install OpenAI SDK: `npm install openai`
+   - Import OpenAI: `import OpenAI from 'openai'`
+   - Initialize OpenAI client with DeepSeek config:
+
+```typescript
+const openai = new OpenAI({
+  baseURL: process.env.DEEPSEEK_API_URL || 'https://api.deepseek.com',
+  apiKey: process.env.DEEPSEEK_API_KEY,
+});
+```
+
+3. Implement request handling:
+   - Parse incoming request body
+   - Validate user input and parameters
+   - Set up proper error handling
+   - Implement rate limiting (optional)
+
+4. Create DeepSeek communication logic:
+   - Format user messages for DeepSeek, including the full conversation history.
+   - Implement message history handling:
+     ```typescript
+     // Example message structure for multi-round conversation leveraging context caching
+     // On subsequent requests, include the full history:
+     const messages = [
+       { role: 'system', content: systemPrompt },
+       { role: 'user', content: 'First user message' },
+       { role: 'assistant', content: 'First assistant response' },
+       { role: 'user', content: 'Second user message' } // Current message
+       // ... continue adding user/assistant pairs
+     ];
+     ```
+   - Call DeepSeek API:
+     ```typescript
+     const completion = await openai.chat.completions.create({
+       messages, // Pass the full, ordered message history
+       model: 'deepseek-chat',
+     });
+     ```
+   - Store received assistant response in conversation history for the next request.
+   - Handle response processing.
+   - Implement error handling for API failures.
+
+5. Implement response handling:
+   - Format DeepSeek response for the frontend
+   - Add proper status codes
+   - Implement response streaming if needed
+   - Return properly formatted JSON
+
+## Expected Output
+A functional API route that:
+- Securely communicates with DeepSeek API
+- Handles user requests and message history
+- Properly formats requests and responses
+- Includes error handling and validation
+- Is ready to integrate with the frontend chat interface
+
+## Notes
+- Focus on security - never expose API keys in client-side code
+- Consider implementing response streaming for better UX
+- Use appropriate error handling for various failure scenarios
+- Consider adding request throttling to manage API usage
+- DeepSeek API is compatible with OpenAI SDK with custom baseURL and model name
+- Message history must be properly maintained and sent in full to leverage context caching effectively for multi-round conversations.
+- The system message plus the initial parts of the conversation history form the prefix that gets cached.
+- Each unique conversation session requires its own distinct message history tracking.
+- Consider implementing cleanup for old cached contexts if needed, although DeepSeek manages this automatically to some extent.

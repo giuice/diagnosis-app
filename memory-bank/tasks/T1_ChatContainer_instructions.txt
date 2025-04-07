@@ -1,0 +1,53 @@
+# T1_ChatContainer Instructions
+
+## Objective
+Create the main chat container component that will serve as the primary UI for the diagnostic conversation between the user and the AI assistant.
+
+## Context
+Parent Implementation Plan: IP1_ChatInterface
+This task focuses on creating the main container component for the chat interface. The chat container will provide the overall layout and structure for the conversation UI, including the message list area and input section.
+
+## Dependencies
+- Next.js setup
+- shadcn/ui components
+- Tailwind CSS
+
+## Steps
+1. ✅ Create the basic component structure:
+   - Create file: `src/components/chat/ChatContainer.tsx`
+   - Implement component with TypeScript React
+   - Add necessary imports
+
+2. ✅ Implement the main layout:
+   - Create a responsive layout using Tailwind CSS
+   - Divide into message area (top) and input area (bottom)
+   - Ensure full-height usage of available space
+   - Add proper padding and spacing
+
+3. ✅ Create placeholder components:
+   - Add MessageList placeholder component
+   - Add InputArea placeholder component
+   - Connect components visually in layout
+
+4. ✅ Style the container:
+   - Apply shadcn/ui Card component for container
+   - Add appropriate background colors and shadows
+   - Implement responsive styling for different screen sizes
+
+5. ✅ Implement basic accessibility features:
+   - Add proper ARIA roles for chat elements
+   - Ensure keyboard navigation is possible
+   - Add appropriate focus states
+
+## Expected Output
+A functional and visually appealing chat container component that:
+- Provides a clear separation between message list and input area
+- Is responsive across different device sizes
+- Has clean and consistent styling using shadcn/ui and Tailwind
+- Is ready to integrate with message and input components
+
+## Notes
+- Focus on layout and structure in this task
+- Actual message rendering and input handling will be implemented in separate tasks
+- Consider adding a header section for potential controls (new chat, export, etc.)
+- Ensure the component is performant and doesn't re-render unnecessarily
