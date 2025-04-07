@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Diagnosis Web App 🩺
 
-## Getting Started
+A web-based AI diagnosis assistant that simulates a doctor-patient interaction. Users describe their health issues via a chat interface, and the AI guides them through a conversational diagnostic process using a predefined system prompt.
 
-First, run the development server:
+## ✨ Key Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+*   **Chat Interface**: Conversational UI for entering symptoms and receiving AI-driven diagnostic guidance.
+*   **Conversational Memory**: AI maintains context within each session for relevant and coherent responses.
+*   **New Diagnosis**: Start a fresh diagnostic session anytime.
+*   **Local History**: Previous sessions are saved to browser local storage for later review.
+*   **Export to PDF**: Download any diagnostic session as a formatted PDF document.
+*   **Secure API Integration**: Backend API routes handle communication with the OpenAI API securely.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+*   **Frontend Framework**: Next.js (React)
+*   **Styling**: Tailwind CSS
+*   **UI Components**: shadcn/ui
+*   **Icons**: Lucide-react
+*   **State Management**: Zustand
+*   **Data Fetching**: React Query (implicitly used for API calls)
+*   **PDF Export**: html2pdf.js / jsPDF (planned)
+*   **AI Backend**: Next.js API Route + OpenAI API
+*   **Deployment**: Vercel
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## ⚙️ Getting Started
 
-## Learn More
+1.  **Clone the repository:**
+    ```bash
+    git clone <your-repository-url>
+    cd <repository-directory>
+    ```
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
+3.  **Set up environment variables:**
+    Create a `.env.local` file in the root directory and add your OpenAI API key:
+    ```
+    OPENAI_API_KEY=your_openai_api_key_here
+    ```
+4.  **Run the development server:**
+    ```bash
+    npm run dev
+    ```
+    Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-To learn more about Next.js, take a look at the following resources:
+## ☁️ Deployment
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is configured for easy deployment on [Vercel](https://vercel.com/). Ensure your `OPENAI_API_KEY` is added as an environment variable in your Vercel project settings.
