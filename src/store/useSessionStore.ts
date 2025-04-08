@@ -1,34 +1,30 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import type { Session, Message } from '@/lib/types/sessionTypes';
 
-export interface SessionMessage {
-  id: string;
-  role: 'user' | 'assistant';
-  content: string;
-  timestamp: string;
-}
-
-export interface SessionMeta {
-  id: string;
-  title: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface Session {
-  meta: SessionMeta;
-  messages: SessionMessage[];
-}
+import {
+  saveSession as saveSessionToStorage,
+  loadAllSessions as loadAllSessionsFromStorage,
+  deleteSession as deleteSessionFromStorage,
+  enforceSessionLimit,
+} from '@/lib/services/storageService';
+import {
+  generateSessionId,
+  generateTimestamp,
+  generateSessionTitle,
+  updateSessionMeta,
+} from '@/lib/utils/sessionMetadataUtils';
 
 interface SessionStore {
   currentSession: Session | null;
-  sessionHistory: SessionMeta[];
-  createNewSession: (title?: string) => void;
-  saveCurrentSession: () => void;
+  sessionHistory: Session['meta'][];
+  createNewSession: (title?: string) => string; // Return the new session ID
+  saveCurrentSession: (messages: Message[]) => void; // Accept messages
   loadSession: (id: string) => void;
   deleteSession: (id: string) => void;
-  updateSessionMessages: (messages: SessionMessage[]) => void;
+  updateSessionMessages: (messages: Message[]) => void;
 }
+
 
 export const useSessionStore = create<SessionStore>()(
   persist(
@@ -36,28 +32,38 @@ export const useSessionStore = create<SessionStore>()(
       currentSession: null,
       sessionHistory: [],
 
-      createNewSession: (title = 'New Diagnosis') => {
-        const id = crypto.randomUUID();
-        const now = new Date().toISOString();
-        const meta = { id, title, createdAt: now, updatedAt: now };
+      createNewSession: (title) => {
+        const id = generateSessionId(); // Generate ID
+        const now = generateTimestamp();
+        const meta = {
+          id,
+          title: title || generateSessionTitle(),
+          createdAt: now,
+          updatedAt: now,
+        };
         const newSession: Session = { meta, messages: [] };
         set((state) => ({
           currentSession: newSession,
           sessionHistory: [meta, ...state.sessionHistory],
         }));
+        saveSessionToStorage(newSession);
+        enforceSessionLimit();
+        return id; // Return the generated ID
       },
 
-      saveCurrentSession: () => {
+      saveCurrentSession: (messages) => { // Accept messages
         const { currentSession, sessionHistory } = get();
         if (!currentSession) return;
-        const updatedMeta = {
-          ...currentSession.meta,
-          updatedAt: new Date().toISOString(),
-        };
+        // Ensure messages are in the correct format (using the existing utility if needed)
+        // Note: Assuming 'messages' passed in are already in the correct 'Message[]' format.
+        // If they come directly from useChatStore, they might need conversion first.
+        const updatedMeta = updateSessionMeta(currentSession.meta, {}); // Just update timestamp
         const updatedSession = {
           ...currentSession,
+          messages: messages, // Use passed messages
           meta: updatedMeta,
         };
+        console.log('Saving session with latest messages:', updatedSession); // DEBUG
         set({ currentSession: updatedSession });
         set({
           sessionHistory: [
@@ -65,17 +71,20 @@ export const useSessionStore = create<SessionStore>()(
             ...sessionHistory.filter((s) => s.id !== updatedMeta.id),
           ],
         });
+        saveSessionToStorage(updatedSession);
+        enforceSessionLimit();
       },
 
       loadSession: (id) => {
-        const stored = localStorage.getItem(`session_${id}`);
+        const stored = window.localStorage.getItem(`session_${id}`);
         if (!stored) return;
-        const session: Session = JSON.parse(stored);
+        const session = JSON.parse(stored);
+        console.log('Loaded session:', session); // DEBUG
         set({ currentSession: session });
       },
 
       deleteSession: (id) => {
-        localStorage.removeItem(`session_${id}`);
+        deleteSessionFromStorage(id);
         set((state) => ({
           sessionHistory: state.sessionHistory.filter((s) => s.id !== id),
           currentSession:
@@ -83,23 +92,20 @@ export const useSessionStore = create<SessionStore>()(
         }));
       },
 
+      // This function now only updates the zustand state. Saving should be triggered explicitly elsewhere (e.g., via saveCurrentSession).
       updateSessionMessages: (messages) => {
         set((state) => {
           if (!state.currentSession) return {};
           const updatedSession = {
             ...state.currentSession,
-            messages,
-            meta: {
-              ...state.currentSession.meta,
-              updatedAt: new Date().toISOString(),
-            },
+            messages, // Update messages in the store state
+            meta: updateSessionMeta(state.currentSession.meta, {}), // Just update timestamp
           };
-          localStorage.setItem(
-            `session_${updatedSession.meta.id}`,
-            JSON.stringify(updatedSession)
-          );
+          // Removed direct saveSessionToStorage call here.
+          // console.log('Updating session messages in store:', updatedSession); // DEBUG
           return { currentSession: updatedSession };
         });
+        // Removed enforceSessionLimit() here - should likely be coupled with explicit saves.
       },
     }),
     {

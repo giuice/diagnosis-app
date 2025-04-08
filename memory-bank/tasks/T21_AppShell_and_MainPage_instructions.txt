@@ -1,0 +1,57 @@
+# T21_AppShell_and_MainPage Instructions
+
+## Objective
+Design and implement the main application shell, including the landing page (`src/app/page.tsx`), layout, and navigation integration.
+
+## Context
+The current Next.js app uses the default scaffolded page. No dedicated task has yet defined the main UI shell, chat integration, or navigation. This task will create the user-facing entry point and overall app structure.
+
+## Dependencies
+- ChatContainer component (T1)
+- Zustand session store (T11)
+- Session management and metadata (T14)
+- Tailwind CSS styling
+- shadcn/ui components
+
+## Steps
+1. ✅ Design the main layout structure:
+   - Sidebar or header navigation (History, New Diagnosis, Export)
+   - Main content area for chat interface
+   - Responsive design with Tailwind CSS
+
+2. ✅ Implement `src/app/page.tsx`:
+   - Import and render ChatContainer
+   - Add navigation UI (buttons, tabs, or sidebar)
+   - Display current session title and metadata
+
+3. ✅ Update `src/app/layout.tsx`:
+   - Apply consistent layout styling
+   - Include global styles and fonts
+   - Provide container for page content
+
+4. ✅ Integrate Zustand store:
+   - Display current session info
+   - Trigger new session creation
+   - Connect navigation actions
+
+5. ✅ Style the UI:
+   - Use Tailwind CSS and shadcn/ui components
+   - Ensure dark/light mode compatibility
+   - Polish spacing, typography, and responsiveness
+
+6. ⬜ Test the app shell:
+   - Verify chat works inside new layout
+   - Check navigation and session switching
+   - Confirm metadata display updates
+
+## Expected Output
+A polished, user-friendly main app shell with:
+- Integrated chat interface
+- Navigation for history, new diagnosis, export
+- Responsive, styled layout
+- Session metadata display
+
+## Notes
+- Keep initial implementation simple; enhance iteratively
+- Consider accessibility and keyboard navigation
+- Plan for future expansion (settings, multi-language)

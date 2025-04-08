@@ -1,58 +1,22 @@
 # T2_MessageComponents Instructions
 
 ## Objective
-Create the message components for rendering both user and AI messages in the chat interface, including proper styling and layout for conversation display.
+Implement reusable message components for chat UI.
 
 ## Context
 Parent Implementation Plan: IP1_ChatInterface
-This task focuses on implementing the components needed to render the conversation messages between the user and the AI assistant. It includes the message list container and individual message items with appropriate styling.
 
 ## Dependencies
-- T1_ChatContainer (message components will be used within the chat container)
-- shadcn/ui components
-- Tailwind CSS
-- Lucide-react for message icons
+- sessionTypes.ts (unified Message interface)
 
 ## Steps
-1. ✅ Create the MessageList component:
-   - Create file: `src/components/chat/MessageList.tsx`
-   - Implement a component to render the list of messages
-   - Add proper scrolling behavior for overflow
-   - Implement auto-scroll to most recent message
+1. ✅ Created MessageItem and MessageList components
+2. ✅ Updated to support 'user', 'assistant', and 'system' roles
+3. ✅ Updated to use unified Message interface
 
-2. ✅ Create the MessageItem component:
-   - Create file: `src/components/chat/MessageItem.tsx`
-   - Implement a component to render individual messages
-   - Support different message types (user/AI)
-   - Add appropriate styling for each message type
-   - Include timestamp display (optional)
-
-3. ✅ Implement message styling:
-   - Use different background colors for user vs AI messages
-   - Add appropriate padding and margins
-   - Implement message bubbles with rounded corners
-   - Add subtle animations for new messages (optional)
-
-4. ✅ Add message icons/avatars:
-   - Add user avatar/icon for user messages
-   - Add AI/doctor icon for AI messages
-   - Use Lucide-react for consistent icon styling
-
-5. ✅ Implement loading state for AI messages:
-   - Create a typing indicator for when AI is responding
-   - Add animation for loading state
-   - Ensure smooth transition when message arrives
-
-## Expected Output
-A set of components that:
-- Render a list of messages in a conversation format
-- Display user and AI messages with distinct styling
-- Support automatic scrolling to newest messages
-- Show appropriate loading states
-- Are ready to integrate with actual message data
+## Status
+- Message components functional
+- Compatible with unified message model
 
 ## Notes
-- Focus on UI rendering and styling in this task
-- Actual message data handling will be implemented in T4_ChatStateManagement
-- Consider accessibility for visually impaired users (clear contrast, etc.)
-- Ensure the message list performs well with many messages
+- Further improvements: styling, accessibility

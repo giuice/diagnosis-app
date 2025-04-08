@@ -15,31 +15,31 @@ This task focuses on creating the navigation system that lets users move between
 - Tailwind CSS
 
 ## Steps
-1. Create navigation component:
+1. ✅ Create navigation component:
    - Create file: `src/components/navigation/SessionNavigation.tsx`
    - Implement tab or switch interface
    - Add active indicators for current view
    - Create responsive layout for different device sizes
 
-2. Implement state management for navigation:
+2. ⬜ Implement state management for navigation:
    - Create view state tracking
    - Implement view switching logic
    - Add URL-based navigation (optional)
    - Preserve state between view switches
 
-3. Add navigation triggers:
+3. ⬜ Add navigation triggers:
    - Implement click handlers for tab/switch interface
    - Create keyboard shortcuts for navigation
    - Add breadcrumb navigation for nested views
    - Implement back button functionality
 
-4. Create smooth transitions:
+4. ⬜ Create smooth transitions:
    - Add animation between view changes
    - Implement loading states for view transitions
    - Create proper focus management
    - Ensure scroll position is preserved when appropriate
 
-5. Integrate with layout:
+5. ⬜ Integrate with layout:
    - Add navigation to main application layout
    - Ensure proper mobile adaptability
    - Create consistent styling with application theme

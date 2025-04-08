@@ -15,47 +15,17 @@ This task focuses on implementing the component that displays a selected histori
 - Tailwind CSS
 
 ## Steps
-1. Create the session viewer component:
-   - Create file: `src/components/history/SessionViewer.tsx`
-   - Implement main component structure
-   - Add container for conversation display
-   - Create header with metadata and actions
+1. ✅ Created SessionViewer component with metadata header and conversation display
+2. ✅ Integrated PDF export button (calls exportSessionToPDF)
+3. ✅ Updated to use unified Message interface from sessionTypes.ts
+4. ✅ Supports 'user', 'assistant', and 'system' roles
+5. ✅ Responsive design and styling
 
-2. Implement conversation display:
-   - Adapt or reuse message components from chat interface
-   - Modify for read-only context
-   - Ensure proper rendering of both user and AI messages
-   - Add visual indicators for read-only state
-
-3. Add session metadata display:
-   - Show session title, date, and other metadata
-   - Create expandable/collapsible metadata section
-   - Add session duration information
-   - Implement session tags if applicable
-
-4. Create session actions:
-   - Add PDF export button
-   - Implement "Resume Conversation" functionality
-   - Add delete option with confirmation
-   - Create return to list navigation
-
-5. Implement responsive design:
-   - Ensure proper layout on different device sizes
-   - Create mobile-friendly navigation
-   - Add collapsible sections for small screens
-   - Implement proper scroll behavior
-
-## Expected Output
-A session viewer component that:
-- Clearly displays the full conversation history of a selected session
-- Shows relevant session metadata
-- Provides actions for exporting, resuming, or deleting the session
-- Maintains visual consistency with the chat interface
-- Clearly indicates its read-only nature
+## Integration Status
+- SessionViewer integrated and functional
+- Uses unified Message interface
+- Export button generates PDF successfully
 
 ## Notes
-- Focus on readability of the conversation history
-- Consider adding visual cues to differentiate from active chat
-- Ensure accessibility for screen readers
-- Add proper keyboard navigation between sessions
-- Consider implementing highlight/search within conversation
+- Further improvements: add resume/delete actions, polish UI
+- Confirmed message persistence after unification

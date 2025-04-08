@@ -1,13 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import MessageItem from './MessageItem';
+import { Message  } from '@/lib/types/sessionTypes'; // Adjust the import path as necessary
 
-interface Message {
-  id: string;
-  role: 'user' | 'assistant';
-  content: string;
-  timestamp?: string;
-  isLoading?: boolean;
-}
 
 interface MessageListProps {
   messages: Message[];

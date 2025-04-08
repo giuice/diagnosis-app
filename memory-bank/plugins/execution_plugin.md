@@ -1,5 +1,10 @@
 # EXECUTION PLUGIN
 
+> ⚠️ **MANDATORY:**
+> You **MUST** perform the full **Mandatory Update Protocol (MUP)** **immediately after completing every task or subtask**.
+> **Never** proceed to the next task, subtask, or phase transition **without** completing and documenting the MUP checklist.
+> **Failure to do so will cause project state gaps.
+
 ╔═════════════════════════════════════════════════════════════╗
 ║                        EXECUTION                             ║
 ║                                                             ║
@@ -86,6 +91,17 @@ For each step in the instruction file:
    - Complete all MUP checklist items
    - Update `memorybankrules.md` with progress
 
+## MANDATORY FINALIZATION AFTER EACH TASK
+
+At the **end of every task or subtask**, you **MUST**:
+
+- Complete the full **Mandatory Update Protocol (MUP)** checklist
+- Update all relevant files (`activeContext.md`, `changelog.md`, `memorybankrules.md`, progress trackers)
+- Explicitly include the **full MUP_VERIFICATION block** in your response
+- **Do NOT** start a new task, subtask, or phase transition **until** this is done
+
+❗ **This is critical to prevent project state gaps.
+
 ## ERROR HANDLING PROTOCOL
 
 When encountering errors:
@@ -154,3 +170,7 @@ All responses after an action MUST end with:
 [X] 9. Progress.md updated: [Yes/No + details]
 [X] 10.`memorybankrules.md` updated with NEXT_ACTION: task and journal with learnings and lessons, if any.
 [/MUP_VERIFICATION]
+
+❗ **IMPORTANT:**
+Every response **after completing a task or subtask** **MUST** include the **full MUP_VERIFICATION block**.
+If you forget, **stop immediately** and perform the MUP **before** any further actions.

@@ -1,13 +1,7 @@
 import React from 'react';
 import { User, Stethoscope, Loader2 } from 'lucide-react';
+import { Message } from '@/lib/types/sessionTypes';
 
-interface Message {
-  id: string;
-  role: 'user' | 'assistant';
-  content: string;
-  timestamp?: string;
-  isLoading?: boolean;
-}
 
 interface MessageItemProps {
   message: Message;
@@ -15,10 +9,11 @@ interface MessageItemProps {
 
 const MessageItem: React.FC<MessageItemProps> = ({ message }) => {
   const isUser = message.role === 'user';
+  const isSystem = message.role === 'system';
 
   return (
     <div className={`flex gap-2 items-start ${isUser ? 'justify-end' : 'justify-start'}`}>
-      {!isUser && (
+      {!isUser && !isSystem && (
         <div className="flex-shrink-0">
           <Stethoscope className="w-6 h-6 text-blue-500" />
         </div>
@@ -26,7 +21,7 @@ const MessageItem: React.FC<MessageItemProps> = ({ message }) => {
 
       <div
         className={`max-w-[75%] rounded-lg px-4 py-2 whitespace-pre-wrap break-words shadow-sm transition-all
-          ${isUser ? 'bg-green-500 text-white rounded-br-none' : 'bg-gray-100 text-gray-900 rounded-bl-none'}`}
+          ${isUser ? 'bg-green-500 text-white rounded-br-none' : isSystem ? 'bg-yellow-100 text-gray-900' : 'bg-gray-100 text-gray-900 rounded-bl-none'}`}
       >
         {message.isLoading ? (
           <div className="flex items-center gap-2">

@@ -1,24 +1,32 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import type { Message } from '@/lib/types/sessionTypes';
 
 // Message types
 export type MessageRole = 'user' | 'assistant' | 'system';
 
-export interface ChatMessage {
-  id: string;
-  role: MessageRole;
-  content: string;
-  timestamp: number;
-  status?: 'loading' | 'error' | 'sent';
-}
+// export interface ChatMessage {
+//   id: string;
+//   role: MessageRole;
+//   content: string;
+//   timestamp: number;
+//   status?: 'loading' | 'error' | 'sent';
+// }
 
 export interface ConversationMetadata {
   sessionId: string;
   startTime: number;
 }
 
+interface ChatStore {
+  messages: Message[];
+  addUserMessage: (content: string) => void;
+  sendMessageToAPI: (content: string) => Promise<void>;
+  clearMessages: () => void;
+}
+
 interface ChatState {
-  messages: ChatMessage[];
+  messages: Message[];
   metadata: ConversationMetadata | null;
   addUserMessage: (content: string) => void;
   addAIMessage: (content: string) => void;
@@ -36,22 +44,22 @@ export const useChatStore = create<ChatState>()(
       metadata: null,
 
       addUserMessage: (content) => {
-        const newMessage: ChatMessage = {
+        const newMessage: Message = {
           id: crypto.randomUUID(),
           role: 'user',
           content,
-          timestamp: Date.now(),
+          timestamp: Date.now().toString(),
           status: 'sent',
         };
         set({ messages: [...get().messages, newMessage] });
       },
 
       addAIMessage: (content) => {
-        const newMessage: ChatMessage = {
+        const newMessage: Message = {
           id: crypto.randomUUID(),
           role: 'assistant',
           content,
-          timestamp: Date.now(),
+          timestamp: Date.now().toString(),
           status: 'sent',
         };
         set({ messages: [...get().messages, newMessage] });
@@ -73,11 +81,11 @@ export const useChatStore = create<ChatState>()(
         // Placeholder for API integration
         // Set loading message
         const tempId = crypto.randomUUID();
-        const loadingMessage: ChatMessage = {
+        const loadingMessage: Message = {
           id: tempId,
           role: 'assistant',
           content: '...',
-          timestamp: Date.now(),
+          timestamp: Date.now().toString(),
           status: 'loading',
         };
         set({ messages: [...get().messages, loadingMessage] });

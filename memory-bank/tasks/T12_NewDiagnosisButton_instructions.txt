@@ -14,31 +14,31 @@ This task focuses on creating the "New Diagnosis" button component and its assoc
 - Tailwind CSS
 
 ## Steps
-1. Create the button component:
+1. ✅ Create the button component:
    - Create file: `src/components/session/NewDiagnosisButton.tsx`
    - Implement button UI using shadcn/ui Button component
    - Add appropriate icon (e.g., plus sign or document)
    - Style with Tailwind CSS for consistency
 
-2. Implement click handler:
+2. ✅ Implement click handler:
    - Create function to handle new session creation
    - Add confirmation dialog if current session has content
    - Connect to session store for saving current session
    - Implement functionality to reset chat state
 
-3. Add session transition logic:
+3. ✅ Add session transition logic:
    - Save current session to history before clearing
    - Generate new session ID and metadata
    - Implement smooth transition between sessions
    - Add success notification or feedback
 
-4. Integrate with layout:
+4. ✅ Integrate with layout:
    - Add button to appropriate location in UI
    - Consider placement for optimal visibility and access
    - Ensure mobile responsiveness
    - Add keyboard shortcut (optional)
 
-5. Implement accessibility:
+5. ✅ Implement accessibility:
    - Add proper ARIA attributes
    - Ensure keyboard navigation
    - Include appropriate focus states
