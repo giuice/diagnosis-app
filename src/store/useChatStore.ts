@@ -95,10 +95,7 @@ export const useChatStore = create<ChatState>()(
           const chatHistory = get().messages.filter(m => m.role && m.content);
           
           // Use the system prompt from the imported module and replace {{user_problem}} on first call
-          const systemPromptContent = systemPrompt.replace(
-            '{{user_problem}}',
-            content)
-
+          const systemPromptContent = systemPrompt;
           const apiMessages = [
             { role: 'system', content: systemPromptContent },
             ...chatHistory.map(({ role, content }) => ({ role, content })),

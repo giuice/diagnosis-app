@@ -13,6 +13,8 @@
 
 ## Last Completed Action
 - Implemented DeepSeek API message validation fix (Task T11)
+- Implemented prevention of empty diagnostic sessions (Task T16)
+- Implemented automatic switch to chat view after resuming a session
 
 ## Current Focus
 - Test DeepSeek API fix
@@ -22,8 +24,15 @@
 - Verify DeepSeek API fix works as expected
 - Execute code changes for T16
 - Run tests and update documentation
+- Test the new behavior thoroughly
+- Update or add unit tests
+- Plan subsequent improvements or bug fixes
+- Test the new resume behavior
+- Plan further UI/UX improvements
 
 ## Notes
 - DeepSeek API call now prepends system prompt if missing
 - Transitioned from strategy to execution phase
 - Chat now calls real API and formats responses
+- Session creation now checks for messages and blocks empty sessions in UI and store
+- User resumes a session and is immediately taken to chat interface

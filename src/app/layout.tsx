@@ -4,6 +4,7 @@ import "./globals.css";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState, useRef } from 'react';
 import { useSessionStore } from '@/store/useSessionStore';
+import { useChatStore } from '@/store/useChatStore';
 import HistoryView from '@/components/history/HistoryView';
 import SessionViewer from '@/components/history/SessionViewer';
 import SessionNavigation from '@/components/navigation/SessionNavigation';
@@ -29,6 +30,7 @@ export default function RootLayout({
   const [loading, setLoading] = useState(false);
   const mainRef = useRef<HTMLDivElement>(null);
   const createNewSession = useSessionStore((state) => state.createNewSession);
+  const messages = useChatStore((state) => state.messages);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -48,6 +50,20 @@ export default function RootLayout({
     }, 150); // simulate brief loading
   };
 
+  const handleNewDiagnosis = () => {
+    if (!messages || messages.length === 0) {
+      alert('Cannot start a new diagnosis without any messages.');
+      return;
+    }
+    const title = `Diagnosis ${new Date().toLocaleString()}`;
+    const newSessionId = createNewSession(title, messages);
+    if (!newSessionId) {
+      console.log('No new session created because message list was empty.');
+      return;
+    }
+    handleViewChange('chat');
+  };
+
   return (
     <html lang="en">
       <body
@@ -62,7 +78,7 @@ export default function RootLayout({
               onViewChange={handleViewChange}
             />
             <nav className="flex flex-col gap-4 mb-4 mt-4">
-              <Button variant="outline" onClick={() => { createNewSession(); handleViewChange('chat'); }}>New Diagnosis</Button>
+              <Button variant="outline" onClick={handleNewDiagnosis}>New Diagnosis</Button>
               <Button variant="outline">Export</Button>
             </nav>
             <Button size="sm" onClick={() => setIsDark(!isDark)}>
@@ -83,7 +99,7 @@ export default function RootLayout({
               onViewChange={handleViewChange}
             />
             <div className="flex gap-3 mt-2">
-              <Button size="sm" variant="outline" onClick={() => { createNewSession(); handleViewChange('chat'); }}>New</Button>
+              <Button size="sm" variant="outline" onClick={handleNewDiagnosis}>New</Button>
               <Button size="sm" variant="outline">Export</Button>
             </div>
           </header>
@@ -125,7 +141,7 @@ export default function RootLayout({
                     </div>
                   )}
                   {viewMode === 'history' && <HistoryView onSelectSession={() => setViewMode('viewer')} />}
-                  {viewMode === 'viewer' && <SessionViewer />}
+                  {viewMode === 'viewer' && <SessionViewer onViewChange={handleViewChange} />}
                   {viewMode === 'chat' && children}
                 </motion.div>
               )}

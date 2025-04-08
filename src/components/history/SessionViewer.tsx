@@ -4,10 +4,9 @@ import { Button } from '@/components/ui/button';
 import MessageItem from '@/components/chat/MessageItem';
 import { exportSessionToPDF } from '@/lib/utils/pdfExport';
 import ResumeButton from '@/components/history/ResumeButton';
-import { extractSessionData, transformSessionForChat, isSessionResumable } from '@/lib/utils/sessionResumption';
 import { useChat } from '@/store/useChatStore';
 
-const SessionViewer: React.FC = () => {
+const SessionViewer: React.FC<{ onViewChange: (view: 'chat' | 'history') => void }> = ({ onViewChange }) => {
   const currentSession = useSessionStore((state) => state.currentSession);
   const { loadSession, messages: activeMessages } = useChat();
 
@@ -31,6 +30,7 @@ const SessionViewer: React.FC = () => {
             session={currentSession}
             loadSession={loadSession}
             hasActiveSessionContent={activeMessages.length > 0}
+            onResumeComplete={() => onViewChange('chat')}
           />
           <Button size="sm" variant="destructive" onClick={() => console.log('Delete session')}>Delete</Button>
         </div>

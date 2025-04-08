@@ -9,15 +9,19 @@ interface ResumeButtonProps {
   loadSession: (data: { messages: any[]; metadata: any }) => void;
   disabled?: boolean;
   hasActiveSessionContent: boolean;
+  onResumeComplete?: () => void;
 }
 
-const ResumeButton: React.FC<ResumeButtonProps> = ({ session, loadSession, disabled, hasActiveSessionContent }) => {
+const ResumeButton: React.FC<ResumeButtonProps> = ({ session, loadSession, disabled, hasActiveSessionContent, onResumeComplete }) => {
   const [loading, setLoading] = useState(false);
 
   const handleClick = async () => {
     try {
       setLoading(true);
       await resumeSession({ session, loadSession, hasActiveSessionContent });
+      if (onResumeComplete) {
+        onResumeComplete();
+      }
     } finally {
       setLoading(false);
     }

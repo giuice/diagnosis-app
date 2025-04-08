@@ -14,7 +14,6 @@ const NewDiagnosisButton: React.FC = () => {
   const setMetadata = useChatStore((s) => s.setMetadata);
 
   const handleClick = () => {
-    // Get the current messages *before* potentially clearing them
     const currentMessages = useChatStore.getState().messages;
 
     if (currentMessages.length > 0) {
@@ -22,23 +21,25 @@ const NewDiagnosisButton: React.FC = () => {
         "Start a new diagnosis? Your current conversation will be saved."
       );
       if (!confirmed) return;
-      saveCurrentSession(currentMessages); // Pass the latest messages
+      saveCurrentSession(currentMessages);
     } else {
-      // If there are no messages, no need to save the "current" session.
-      // Depending on logic, maybe saveCurrentSession should handle empty messages gracefully.
-      // For now, we skip saving if there's nothing to save.
+      alert('Cannot start a new diagnosis without any messages.');
+      return; // Prevent creating empty session
     }
 
-    clearMessages(); // Clear messages *after* saving
+    clearMessages();
 
     const title = `Diagnosis ${new Date().toLocaleString()}`;
-    const newSessionId = createNewSession(title); // Capture the returned ID
+    const newSessionId = createNewSession(title, currentMessages);
 
-    // Remove the redundant crypto.randomUUID() call
+    if (!newSessionId) {
+      console.log('No new session created because message list was empty.');
+      return;
+    }
 
     setMetadata({
-      sessionId: newSessionId, // Use the ID from the newly created session
-      startTime: Date.now(), // Keep using Date.now() for start time
+      sessionId: newSessionId,
+      startTime: Date.now(),
     });
   };
 

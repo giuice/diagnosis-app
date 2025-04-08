@@ -6,5 +6,7 @@ This file determines the current phase of the memory bank system and provides ru
 <PHASE_MARKER>
 CURRENT_PHASE: EXECUTION
 NEXT_PHASE: STRATEGY
-LAST_ACTION: Implemented markdown rendering and fixed API response parsing
-NEXT_ACTION: Proceed with Task T16 - Prevent empty sessions
+LAST_ACTION: Implemented auto-switch to chat view after session resume
+NEXT_ACTION: Test session resume behavior and update tests
+REQUIRED_BEFORE_TRANSITION: All steps executed or new planning needed
+</PHASE_MARKER>

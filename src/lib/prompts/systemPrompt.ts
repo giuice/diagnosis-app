@@ -4,7 +4,7 @@ You are an AI diagnostic assistant designed to help identify potential causes fo
 Here is the problem description provided by the user:
 
 <problem_description>
-{{user_problem}}
+{{The problem description from user on the first call}}
 </problem_description>
 
 Follow this generalized diagnostic workflow:

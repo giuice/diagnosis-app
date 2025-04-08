@@ -101,8 +101,7 @@ K2  | <  | -  |
 
 Tracker files:
 - Module dependencies: `memory-bank/dependency_tracker.md`
-- Documentation dependencies: `docs/doc_tracker.md`
-- Mini-trackers: In module instruction files
+- Documentation dependencies: `memory-bank/docs/doc_tracker.md`
 
 ## MANDATORY UPDATE PROTOCOL (MUP) - REQUIRED FILE MODIFICATIONS
 
@@ -137,14 +136,12 @@ Tracker files:
 ## TASK NAMING CONVENTION
 <NAMING_CONVENTION>
 TASK FILE NAMING:
-- Main task: "T{number}_{task_name}_instructions.txt"
-- Subtask: "T{parent_number}_{parent_name}_ST{subtask_number}_{subtask_name}_instructions.txt"
-- Module: "{module_name}_main_instructions.txt"
+- Main task: "T{number}_{task_name}_instructions.md"
+- Subtask: "T{parent_number}_{parent_name}_ST{subtask_number}_{subtask_name}_instructions.md"
 
 EXAMPLES:
-- T1_DatabaseSetup_instructions.txt
-- T1_DatabaseSetup_ST1_SchemaDesign_instructions.txt
-- auth_main_instructions.txt
+- T1_DatabaseSetup_instructions.md
+- T1_DatabaseSetup_ST1_SchemaDesign_instructions.md
 </NAMING_CONVENTION>
 
 ## INSTRUCTION FILE FORMAT

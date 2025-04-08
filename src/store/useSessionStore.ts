@@ -18,7 +18,7 @@ import {
 interface SessionStore {
   currentSession: Session | null;
   sessionHistory: Session['meta'][];
-  createNewSession: (title?: string) => string; // Return the new session ID
+  createNewSession: (title?: string, messages?: Message[]) => string | null; // Return new session ID or null
   saveCurrentSession: (messages: Message[]) => void; // Accept messages
   loadSession: (id: string) => void;
   deleteSession: (id: string) => void;
@@ -32,8 +32,12 @@ export const useSessionStore = create<SessionStore>()(
       currentSession: null,
       sessionHistory: [],
 
-      createNewSession: (title) => {
-        const id = generateSessionId(); // Generate ID
+      createNewSession: (title, messages) => {
+        if (messages && messages.length === 0) {
+          console.log('Skipped creating empty session');
+          return null;
+        }
+        const id = generateSessionId();
         const now = generateTimestamp();
         const meta = {
           id,
@@ -41,14 +45,14 @@ export const useSessionStore = create<SessionStore>()(
           createdAt: now,
           updatedAt: now,
         };
-        const newSession: Session = { meta, messages: [] };
+        const newSession: Session = { meta, messages: messages || [] };
         set((state) => ({
           currentSession: newSession,
           sessionHistory: [meta, ...state.sessionHistory],
         }));
         saveSessionToStorage(newSession);
         enforceSessionLimit();
-        return id; // Return the generated ID
+        return id;
       },
 
       saveCurrentSession: (messages) => { // Accept messages
