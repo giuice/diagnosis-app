@@ -4,9 +4,10 @@
 This implementation plan covers the integration of the OpenAI API for the diagnostic AI functionality of the app. It includes API route creation, secure API key management, request/response handling, and the implementation of the system prompt for diagnosis.
 
 ## Goals
-- Create secure API routes for OpenAI communication
+- Create secure API routes for OpenAI (and DeepSeek) communication
 - Implement proper API key management using environment variables
 - Send appropriate system prompts with user messages to guide the AI
+- **Ensure message format complies with DeepSeek API requirements**
 - Handle API responses and errors effectively
 - Implement response streaming if needed
 - Ensure reliable and efficient API communication
@@ -20,8 +21,12 @@ This implementation plan covers the integration of the OpenAI API for the diagno
 
 ## Technical Approach
 - Use Next.js API routes for secure backend functionality
-- Store OpenAI API key in environment variables (both local and Vercel)
+- Store OpenAI/DeepSeek API key in environment variables (both local and Vercel)
 - Implement React Query for API state management and caching
+- **Before sending API requests:**
+  - **Validate that the `messages` array is non-empty**
+  - **If empty or missing system prompt, prepend a default system message**
+  - **Ensure all messages follow `{ role, content }` format**
 - Create a system prompt to guide the AI's diagnostic approach
 - Add appropriate error handling and retry logic
 - Implement rate limiting to prevent excessive API usage
@@ -33,6 +38,7 @@ This implementation plan covers the integration of the OpenAI API for the diagno
 - T8_SystemPrompt - Implementing the diagnostic system prompt
 - T9_ErrorHandling - Creating robust error handling for API calls
 - T10_ResponseProcessing - Processing and formatting API responses
+- T11_FixDeepSeekMessageFormat - Validate and fix DeepSeek API message format
 
 ## Timeline
 - API route setup: 0.5 day

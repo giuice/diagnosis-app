@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json();
-    const { messages, systemPrompt } = body;
+    let { messages, systemPrompt } = body;
 
     if (!messages || !Array.isArray(messages)) {
       return NextResponse.json({ error: 'Invalid messages format' }, { status: 400, headers: corsHeaders });
@@ -33,7 +33,26 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Server misconfiguration: missing API key' }, { status: 500, headers: corsHeaders });
     }
 
-    // Placeholder: Implement rate limiting here
+    // Fix: Ensure messages array is non-empty and starts with system prompt
+    const defaultSystemPrompt = systemPrompt || 'You are a helpful AI assistant.';
+
+    const hasSystemMessage = messages.length > 0 && messages[0].role === 'system';
+
+    if (!hasSystemMessage) {
+      messages = [
+        { role: 'system', content: defaultSystemPrompt },
+        ...messages.filter(m => m && m.role && m.content),
+      ];
+    }
+
+    if (messages.length === 0) {
+      messages = [
+        { role: 'system', content: defaultSystemPrompt },
+      ];
+    }
+
+    // Validate all messages have required fields
+    messages = messages.filter(m => m && typeof m.role === 'string' && typeof m.content === 'string');
 
     const completion = await openai.chat.completions.create({
       messages,

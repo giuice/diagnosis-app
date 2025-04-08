@@ -37,7 +37,15 @@ A web-based AI diagnosis assistant that simulates a doctor-patient interaction. 
 3.  **Set up environment variables:**
     Create a `.env.local` file in the root directory and add your OpenAI API key:
     ```
-    OPENAI_API_KEY=your_openai_api_key_here
+    # Example environment variables for Diagnosis Web App
+
+    ## DeepSeek API configuration
+    DEEPSEEK_API_KEY=your-deepseek-api-key-here
+    DEEPSEEK_API_URL=https://api.deepseek.com
+
+    ## Optional OpenAI API key (if using OpenAI directly)
+    OPENAI_API_KEY=your-openai-api-key-here
+
     ```
 4.  **Run the development server:**
     ```bash
@@ -47,4 +55,4 @@ A web-based AI diagnosis assistant that simulates a doctor-patient interaction. 
 
 ## ☁️ Deployment
 
-This project is configured for easy deployment on [Vercel](https://vercel.com/). Ensure your `OPENAI_API_KEY` is added as an environment variable in your Vercel project settings.
+This project is configured for easy deployment on [Vercel](https://vercel.com/). Ensure your `API_KEYS` is added as an environment variable in your Vercel project settings.

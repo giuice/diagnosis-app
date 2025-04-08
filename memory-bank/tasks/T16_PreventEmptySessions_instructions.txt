@@ -1,0 +1,39 @@
+# T16_PreventEmptySessions Instructions
+
+## Objective
+Prevent the creation and saving of empty diagnostic sessions without any user or AI messages.
+
+## Context
+- Currently, clicking "New Diagnosis" creates a new session even if no messages exist.
+- This leads to cluttered history with empty sessions.
+- This task is part of IP3_SessionManagement.
+
+## Dependencies
+- Zustand session store (T11_SessionStore)
+- New Diagnosis button (T12_NewDiagnosisButton)
+- Session persistence logic (T13_LocalStoragePersistence)
+
+## Steps
+1. Review session creation logic in:
+   - `useSessionStore`
+   - `NewDiagnosisButton.tsx`
+   - Sidebar/menu buttons in `layout.tsx`
+2. Before creating or saving a session:
+   - Check if the current message list is empty.
+   - If empty, do NOT create or save a new session.
+3. Optionally, disable the "New Diagnosis" button if no messages exist.
+4. Optionally, show a user-friendly warning or tooltip.
+5. Test:
+   - Creating a new session with messages (should work)
+   - Trying to create a new session with no messages (should be prevented)
+6. Update unit tests or add new tests for this behavior.
+7. Document the fix in code comments and changelog.
+
+## Expected Output
+- No empty sessions are created or saved.
+- Session history contains only meaningful conversations.
+- Improved user experience and data quality.
+
+## Notes
+- Coordinate with UI/UX to decide on user feedback when blocked.
+- Consider edge cases like rapid clicks or race conditions.

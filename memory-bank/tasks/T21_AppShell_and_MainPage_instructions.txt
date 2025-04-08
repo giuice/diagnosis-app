@@ -39,7 +39,7 @@ The current Next.js app uses the default scaffolded page. No dedicated task has 
    - Ensure dark/light mode compatibility
    - Polish spacing, typography, and responsiveness
 
-6. ⬜ Test the app shell:
+6. ✅ Test the app shell:
    - Verify chat works inside new layout
    - Check navigation and session switching
    - Confirm metadata display updates

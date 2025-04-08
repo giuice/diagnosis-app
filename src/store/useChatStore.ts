@@ -1,17 +1,11 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type { Message } from '@/lib/types/sessionTypes';
+import { processAPIResponse } from '@/lib/utils/responseProcessor';
+import { systemPrompt } from '@/lib/prompts/systemPrompt';
 
 // Message types
 export type MessageRole = 'user' | 'assistant' | 'system';
-
-// export interface ChatMessage {
-//   id: string;
-//   role: MessageRole;
-//   content: string;
-//   timestamp: number;
-//   status?: 'loading' | 'error' | 'sent';
-// }
 
 export interface ConversationMetadata {
   sessionId: string;
@@ -35,6 +29,7 @@ interface ChatState {
   setMetadata: (metadata: ConversationMetadata) => void;
   // Placeholder for API call handler
   sendMessageToAPI: (content: string) => Promise<void>;
+  loadSession: (sessionData: { messages: Message[]; metadata: ConversationMetadata | null }) => void;
 }
 
 export const useChatStore = create<ChatState>()(
@@ -78,8 +73,6 @@ export const useChatStore = create<ChatState>()(
       setMetadata: (metadata) => set({ metadata }),
 
       sendMessageToAPI: async (content) => {
-        // Placeholder for API integration
-        // Set loading message
         const tempId = crypto.randomUUID();
         const loadingMessage: Message = {
           id: tempId,
@@ -91,24 +84,61 @@ export const useChatStore = create<ChatState>()(
         set({ messages: [...get().messages, loadingMessage] });
 
         try {
-          // TODO: Replace with actual API call
-          await new Promise((resolve) => setTimeout(resolve, 1000));
-          // Simulate AI response
-          const aiResponse = 'This is a simulated AI response.';
+          const userMessage = {
+            id: crypto.randomUUID(),
+            role: 'user',
+            content,
+            timestamp: Date.now().toString(),
+            status: 'sent',
+          };
+
+          const chatHistory = get().messages.filter(m => m.role && m.content);
+          
+          // Use the system prompt from the imported module and replace {{user_problem}} on first call
+          const systemPromptContent = systemPrompt.replace(
+            '{{user_problem}}',
+            content)
+
+          const apiMessages = [
+            { role: 'system', content: systemPromptContent },
+            ...chatHistory.map(({ role, content }) => ({ role, content })),
+            { role: 'user', content },
+          ];
+
+          const response = await fetch('/api/diagnose', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ messages: apiMessages }),
+          });
+
+          const data = await response.json();
+          const processed = data?.response?.content || 'No response';
+
           set({
             messages: get().messages.map((msg) =>
               msg.id === tempId
-                ? { ...msg, content: aiResponse, status: 'sent' }
+                ? { ...msg, content: processed, status: 'sent' }
                 : msg
             ),
           });
         } catch (error) {
+          console.error('API error:', error);
           set({
             messages: get().messages.map((msg) =>
               msg.id === tempId ? { ...msg, status: 'error' } : msg
             ),
           });
         }
+      },
+
+      /**
+       * Loads a previous session's messages and metadata into chat state.
+       */
+      loadSession: (sessionData: { messages: Message[]; metadata: ConversationMetadata | null }) => {
+        set({
+          messages: sessionData.messages,
+          metadata: sessionData.metadata,
+        });
       },
     }),
     {
@@ -127,6 +157,7 @@ export const useChat = () => {
     clearMessages,
     setMetadata,
     sendMessageToAPI,
+    loadSession,
   } = useChatStore();
 
   return {
@@ -138,5 +169,6 @@ export const useChat = () => {
     clearMessages,
     setMetadata,
     sendMessageToAPI,
+    loadSession,
   };
 };

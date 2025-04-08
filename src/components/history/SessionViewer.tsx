@@ -3,9 +3,13 @@ import { useSessionStore } from '@/store/useSessionStore';
 import { Button } from '@/components/ui/button';
 import MessageItem from '@/components/chat/MessageItem';
 import { exportSessionToPDF } from '@/lib/utils/pdfExport';
+import ResumeButton from '@/components/history/ResumeButton';
+import { extractSessionData, transformSessionForChat, isSessionResumable } from '@/lib/utils/sessionResumption';
+import { useChat } from '@/store/useChatStore';
 
 const SessionViewer: React.FC = () => {
   const currentSession = useSessionStore((state) => state.currentSession);
+  const { loadSession, messages: activeMessages } = useChat();
 
   if (!currentSession) {
     return <div className="p-4">No session selected.</div>;
@@ -23,12 +27,16 @@ const SessionViewer: React.FC = () => {
         </div>
         <div className="flex gap-2">
           <Button size="sm" onClick={() => exportSessionToPDF(currentSession)}>Export</Button>
-          <Button size="sm" onClick={() => console.log('Resume conversation')}>Resume</Button>
+          <ResumeButton
+            session={currentSession}
+            loadSession={loadSession}
+            hasActiveSessionContent={activeMessages.length > 0}
+          />
           <Button size="sm" variant="destructive" onClick={() => console.log('Delete session')}>Delete</Button>
         </div>
       </div>
 
-      <div className="flex flex-col gap-2 border rounded p-2 max-h-[70vh] overflow-y-auto">
+      <div className="flex flex-col gap-2 border rounded p-2 max-h-[70vh] overflow-y-auto chat-scroll-container">
         {currentSession.messages.map((msg) => (
           <MessageItem key={msg.id} message={msg} />
         ))}

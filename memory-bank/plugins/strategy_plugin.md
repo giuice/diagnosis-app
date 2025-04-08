@@ -11,7 +11,7 @@
 ## ENTERING/EXITING THIS PHASE
 
 **Enter if**:
-- `memorybankrules.md` shows `CURRENT: Strategy`
+- `memorybankrules.md` shows `CURRENT_PHASE: Strategy`
 - Transitioning from Setup/Maintenance
 
 **Exit when**:
@@ -21,14 +21,34 @@
 - Tasks are prioritized and ready for execution
 
 **Exit action**:
+You MUST use write_file or edit_file to update memorybankrules.md with:
 ```
-[PHASE_MARKER]
+<PHASE_MARKER>
 CURRENT_PHASE: Strategy
 NEXT_PHASE: Execution
 LAST_ACTION: Completed Strategy Phase - Plans and Tasks Created
-NEXT_ACTION: Trasition to 'EXECUTION' phase
+NEXT_ACTION: Transition to 'EXECUTION' phase
 REQUIRED_BEFORE_TRANSITION: User Action Required
-[/PHASE_MARKER]
+</PHASE_MARKER>
+```
+
+## Workflow Summary
+```mermaid
+flowchart TD
+    A[Start Strategy Phase] --> B[Load core files and context]
+    B --> C[Identify implementation areas]
+    C --> D[Create Implementation Plans]
+    D --> E[Create Task Instruction Files]
+    E --> F[Prioritize Tasks]
+    F --> G{Complex Tasks?}
+    G -- Yes --> H[Decompose into Subtasks]
+    G -- No --> I[Link Tasks to Implementation Plans]
+    H --> I
+    I --> J[Update Progress and Context]
+    J --> K[Verify Checkpoints Before Transition]
+    K --> L{All Plans & Tasks Complete?}
+    L -- Yes --> M[Update memorybankrules.md to NEXT: Execution]
+    L -- No --> N[Continue Strategy Phase]
 ```
 
 ## CONTEXT LOADING
@@ -48,20 +68,25 @@ REQUIRED_BEFORE_TRANSITION: User Action Required
 ## IMPLEMENTATION PLAN CREATION
 
 ❗ **PRE-IMPLEMENTATION PLAN CHECKLIST** - Complete before creating ANY implementation plan:
-[IMPLEMENTATION_CHECKLIST]
+<IMPLEMENTATION_CHECKLIST>
 [ ] 1. Plan name follows convention: IP{number}_{plan_name}
 [ ] 2. Plan will be stored in memory-bank/implementation_plans/ directory
 [ ] 3. Plan number is unique and sequential
 [ ] 4. Plan name clearly describes the area of development
 [ ] 5. All required sections are planned
-[/IMPLEMENTATION_CHECKLIST]
+</IMPLEMENTATION_CHECKLIST>
 
 1. Identify area for implementation based on:
    - `projectbrief.md` objectives
    - `activeContext.md` priorities
    - System architecture and components
 
-2. Create implementation plan file with correct naming convention:
+2. Use write_file or create_directory to create implementation plan directory if it doesn't exist:
+   ```
+   memory-bank/implementation_plans/
+   ```
+
+3. Use write_file to create implementation plan file with correct naming convention:
    ```
    memory-bank/implementation_plans/IP{number}_{plan_name}.md
    ```
@@ -69,17 +94,7 @@ REQUIRED_BEFORE_TRANSITION: User Action Required
    
    ❗ **CRITICAL**: ALL implementation plans MUST be stored in the `memory-bank/implementation_plans/` directory
 
-3. Copy, fill out, and include this IMPLEMENTATION PLAN CREATION TEMPLATE in your response:
-
-[IMPLEMENTATION_PLAN_TEMPLATE]
-PLAN ID: IP{number}_{name}
-PLAN LOCATION: memory-bank/implementation_plans/IP{number}_{name}.md
-PLAN DESCRIPTION: [Brief description]
-RELATED TASKS: [List of T{number}_{task_name} IDs]
-FOLLOWS NAMING CONVENTION: [YES/NO]
-[/IMPLEMENTATION_PLAN_TEMPLATE]
-
-4. Copy template from `memory-bank/templates/implementation_plan_template.md` and populate with:
+4. Implementation plan should follow this template:
    ```
    # IP{number}_{plan_name}
    
@@ -110,7 +125,7 @@ FOLLOWS NAMING CONVENTION: [YES/NO]
    - [Risk 2]: [Mitigation 2]
    ```
 
-5. Update `progress.md` to include implementation plan:
+5. After creating the implementation plan, use write_file or edit_file to update `memory-bank/progress.md`:
    ```
    ## Implementation Plans
    - IP1_UserDashboard: 0% (not started)
@@ -123,14 +138,14 @@ FOLLOWS NAMING CONVENTION: [YES/NO]
 ## TASK INSTRUCTION FILE CREATION
 
 ❗ **PRE-TASK CREATION CHECKLIST** - Complete before creating ANY task file:
-[TASK_CHECKLIST]
+<TASK_CHECKLIST>
 [ ] 1. Task name follows convention: T{number}_{task_name}
 [ ] 2. Task will be stored in memory-bank/tasks/ directory
 [ ] 3. Task number is unique and sequential
 [ ] 4. Task name clearly describes the purpose
 [ ] 5. Implementation plan is referenced (if applicable)
 [ ] 6. All required sections are planned
-[/TASK_CHECKLIST]
+</TASK_CHECKLIST>
 
 1. Identify task/subtask based on:
    - `projectbrief.md` objectives
@@ -138,7 +153,12 @@ FOLLOWS NAMING CONVENTION: [YES/NO]
    - Dependencies from trackers
    - Implementation plans (reference parent plan)
 
-2. Create file with correct naming convention in the dedicated tasks directory:
+2. Use write_file or create_directory to create tasks directory if it doesn't exist:
+   ```
+   memory-bank/tasks/
+   ```
+
+3. Use write_file to create file with correct naming convention in the dedicated tasks directory:
    ```
    memory-bank/tasks/T{number}_{task_name}_instructions.txt
    ```
@@ -146,17 +166,7 @@ FOLLOWS NAMING CONVENTION: [YES/NO]
    
    ❗ **CRITICAL**: ALL task files MUST be stored in the `memory-bank/tasks/` directory
 
-3. Copy, fill out, and include this TASK CREATION TEMPLATE in your response:
-
-[TASK_CREATION_TEMPLATE]
-TASK ID: T{number}_{name}
-TASK LOCATION: memory-bank/tasks/T{number}_{name}_instructions.txt
-TASK DESCRIPTION: [Brief description]
-PARENT IMPLEMENTATION PLAN: [IP{number}_{name}]
-FOLLOWS NAMING CONVENTION: [YES/NO]
-[/TASK_CREATION_TEMPLATE]
-
-4. Copy template from `memory-bank/templates/task_template.md` and populate with:
+4. Task instruction file should follow this template:
    ```
    # T{number}_{task_name} Instructions
    
@@ -182,7 +192,7 @@ FOLLOWS NAMING CONVENTION: [YES/NO]
    [Additional considerations]
    ```
 
-5. Update `progress.md` with task:
+5. After creating the task instruction file, use write_file or edit_file to update `memory-bank/progress.md`:
    ```
    ## Task Completion
    - T1_DashboardLayout: 0% (not started) [IP1_UserDashboard]
@@ -198,7 +208,11 @@ FOLLOWS NAMING CONVENTION: [YES/NO]
 2. Assess dependencies from trackers to identify prerequisite tasks
 3. Align with project objectives from `projectbrief.md`
 4. Consider recent priorities from `activeContext.md`
-5. Document prioritization in `activeContext.md` AND update `progress.md`:
+5. Use write_file or edit_file to update both files:
+
+   First update `memory-bank/activeContext.md` with prioritization reasoning.
+   
+   Then update `memory-bank/progress.md` with:
    ```
    ## Task Tracking
    
@@ -222,29 +236,51 @@ FOLLOWS NAMING CONVENTION: [YES/NO]
 For complex tasks:
 1. Analyze complexity and scope
 2. If too large, identify logical subtasks
-3. Create instruction file for each subtask following naming convention:
+3. Use write_file to create instruction file for each subtask following naming convention:
    ```
    memory-bank/tasks/T{parent_number}_{parent_name}_ST{subtask_number}_{subtask_name}_instructions.txt
    ```
    For example: `memory-bank/tasks/T1_DashboardLayout_ST1_GridSystem_instructions.txt`
 
 4. Define dependencies between subtasks
-5. Update parent task to reference subtasks
-6. Document decomposition in `activeContext.md` and reference parent implementation plan
+5. Use edit_file to update parent task to reference subtasks
+6. Use edit_file to update `memory-bank/activeContext.md` with decomposition reasoning and reference parent implementation plan
 
-## STRATEGY MUP ADDITIONS
+## STRATEGY MUP (MANDATORY FILE UPDATES)
 
-In addition to core MUP checklist, also verify:
-[ ] 6. Implementation plans follow naming convention
-[ ] 7. Task instructions follow naming convention
-[ ] 8. All implementation plans and task instructions have complete sections
-[ ] 9. Tasks are linked to their implementation plans
-[ ] 10. Task priorities are documented
-[ ] 11. Progress.md updated with new implementation plans and tasks
+After EVERY significant action in the Strategy phase, you MUST:
+
+1. Use write_file or edit_file to update `memorybankrules.md` with:
+   ```
+   <PHASE_MARKER>
+   CURRENT_PHASE: Strategy
+   NEXT_PHASE: [appropriate next phase]
+   LAST_ACTION: [description of what you just did]
+   NEXT_ACTION: [description of what should be done next]
+   REQUIRED_BEFORE_TRANSITION: [any requirements before transitioning]
+   </PHASE_MARKER>
+   ```
+
+2. Use write_file or edit_file to update `memory-bank/activeContext.md` with:
+   - What was just completed
+   - Current state of strategy planning
+   - Next steps or tasks
+
+3. Use write_file or edit_file to update `memory-bank/changelog.md` with:
+   ```
+   ## [YYYY-MM-DD]
+   - Created implementation plan: IP{number}_{name}
+   - Created task: T{number}_{name}
+   - Reason: [Reason for change]
+   - Affected files: [List of affected files]
+   ```
+
+4. After making all file updates, verify proper updates by reading files back.
 
 ## CHECKPOINTS BEFORE TRANSITION
 
-[TRANSITION_CHECKLIST]
+Before transitioning to Execution phase, verify:
+<TRANSITION_CHECKLIST>
 [ ] All identified implementation areas have implementation plans
 [ ] All identified tasks have instruction files
 [ ] All implementation plans and instruction files have complete sections
@@ -252,26 +288,27 @@ In addition to core MUP checklist, also verify:
 [ ] Dependencies are clearly specified
 [ ] Task priorities are documented
 [ ] Complex tasks are decomposed if needed
-[ ] `memorybankrules.md` updated with NEXT: Execution
-[/TRANSITION_CHECKLIST]
+[ ] Used edit_file or write_file to update `memorybankrules.md` with NEXT_PHASE: Execution
+</TRANSITION_CHECKLIST>
 
 ## REQUIRED RESPONSE FORMAT
 
-All responses after an action MUST end with:
+All responses after completing an action MUST end with verification of actual file modifications:
 
-[MUP_VERIFICATION]
-[X] 1. Updated activeContext.md with: [brief description]
-[X] 2. Updated changelog.md: [Yes/No + reason]
-[X] 3. Updated phase marker with last_action: [action description]
-[X] 4. Verified next action is correct: [next action]
-[X] 5. Checked if phase transition is needed: [Yes/No + reason]
-[X] 6. Implementation plans follow IP{number}_{name} convention: [Yes/No + EXACT filename]
-[X] 7. Implementation plan files saved in memory-bank/implementation_plans/ directory: [Yes/No + EXACT path]
-[X] 8. Task instructions follow T{number}_{name} convention: [Yes/No + EXACT filename]
-[X] 9. Task files saved in memory-bank/tasks/ directory: [Yes/No + EXACT path]
-[X] 10. All implementation plans and task instructions have complete sections: [Yes/No + list any missing]
-[X] 11. Tasks are linked to their implementation plans: [Yes/No + details]
-[X] 12. Task priorities are documented: [Yes/No + details]
-[X] 13. Progress.md updated with new implementation plans and tasks: [Yes/No + details]
-[X] 14. `memorybankrules.md` updated with NEXT_ACTION action and journal with learnings and lessons, if any.
-[/MUP_VERIFICATION]
+<MUP_COMPLETED_ACTIONS>
+I have made the following file modifications:
+
+1. EDITED `memorybankrules.md`: [Quote the exact text you added to the file]
+
+2. EDITED `memory-bank/activeContext.md`: [Quote the exact text you added to the file]
+
+3. EDITED `memory-bank/changelog.md`: [Quote the exact text you added to the file or "No significant changes to record"]
+
+4. EDITED ADDITIONAL FILES:
+   - [filename]: [Quote the relevant text you added/edited]
+   - [filename]: [Quote the relevant text you added/edited]
+
+5. VERIFICATION: I have confirmed all files were properly updated by reading them back.
+
+6. NEXT ACTION: [Describe exactly what will be done next]
+</MUP_COMPLETED_ACTIONS>

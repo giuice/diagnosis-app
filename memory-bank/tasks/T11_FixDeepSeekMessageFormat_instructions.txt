@@ -1,0 +1,36 @@
+# T11_FixDeepSeekMessageFormat Instructions
+
+## Objective
+Fix the DeepSeek API "Invalid messages format" error by ensuring all API calls include a valid, non-empty messages array starting with a system prompt.
+
+## Context
+- DeepSeek API requires a `messages` array with at least one system message.
+- Current implementation sometimes sends empty or malformed messages, causing 400 errors.
+- This task is part of IP2_APIIntegration.
+
+## Dependencies
+- API route implementation (T6_APIRouteSetup)
+- System prompt implementation (T8_SystemPrompt)
+- Error handling (T9_ErrorHandling)
+
+## Steps
+1. ✅ Review current API call code in the backend Next.js API route.
+2. ✅ Add validation logic:
+   - If `messages` is empty or missing a system message, prepend a default system prompt.
+   - Ensure all messages conform to `{ role, content }` format.
+3. ✅ Test API calls with:
+   - Empty message array (should prepend system prompt)
+   - User messages only (should prepend system prompt)
+   - Properly formatted messages (should pass through)
+4. ✅ Handle any API errors gracefully and log details.
+5. ✅ Update unit tests or add new tests for message validation.
+6. ✅ Document the fix in code comments and changelog.
+
+## Expected Output
+- API calls to DeepSeek succeed without 400 errors.
+- Messages array always valid and starts with system prompt.
+- Improved reliability of diagnosis chat.
+
+## Notes
+- Use the example from DeepSeek docs as reference.
+- Coordinate with frontend if changes to message construction are needed.

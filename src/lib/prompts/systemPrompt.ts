@@ -50,4 +50,6 @@ After receiving the user's response, process it as follows:
 </user_response>
 
 Continue the diagnostic process by providing your next diagnostic process, analysis, and question based on the new information.
+
+OUTPUT in MARKDOWN format.
 `;

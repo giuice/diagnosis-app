@@ -1,7 +1,8 @@
 import React from 'react';
 import { User, Stethoscope, Loader2 } from 'lucide-react';
 import { Message } from '@/lib/types/sessionTypes';
-
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 interface MessageItemProps {
   message: Message;
@@ -28,6 +29,8 @@ const MessageItem: React.FC<MessageItemProps> = ({ message }) => {
             <Loader2 className="animate-spin w-4 h-4" />
             <span>Thinking...</span>
           </div>
+        ) : message.role === 'assistant' ? (
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>{message.content}</ReactMarkdown>
         ) : (
           message.content
         )}
