@@ -42,7 +42,7 @@ REQUIRED_BEFORE_TRANSITION: User Action Required
 - `memory-bank/projectbrief.md`: Project goals
 - `memory-bank/activeContext.md`: Current state
 - `memory-bank/dependency_tracker.md`: Module dependencies
-- `memory-bank/progress.md`: Progress tracking
+- `memory-bank/changelog.md`: log tracking
 
 **Creation procedure**:
 1. Use read_file to check if each file exists
