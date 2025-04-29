@@ -12,7 +12,7 @@
 ║  Core Files      Code Roots    Trackers       ║
 ╚═══════════════════════════════════════════════╝
 
-## ENTERING/EXITING THIS PHASE
+## I. ENTERING/EXITING THIS PHASE
 
 **Enter if**:
 - `memorybankrules.md` shows `CURRENT_PHASE: Setup/Maintenance`
@@ -33,9 +33,22 @@ LAST_ACTION: Completed Setup/Maintenance Phase
 NEXT_ACTION: Transition to Strategy Phase
 REQUIRED_BEFORE_TRANSITION: User Action Required
 </PHASE_MARKER>
+
+[CODE_ROOT_DIRECTORIES]
+- src
+- tests
+- utils
+
+[DOC_DIRECTORIES]
+- docs
+- documentation
+
+[LEARNING_JOURNAL]
+- Regularly updating {memory_dir} and any instruction files help me to remember what I have done and what still needs to be done so I don't lose track.
+- 
 ```
 
-## CORE FILE INITIALIZATION
+## II. CORE FILE INITIALIZATION
 
 **Required files**:
 - `memorybankrules.md`: Phase management
@@ -60,18 +73,52 @@ REQUIRED_BEFORE_TRANSITION: User Action Required
    - For other files, use write_file to create with appropriate headers
    - After creating each file, use read_file to verify it was correctly created
 
-## CODE ROOT IDENTIFICATION
 
-1. Use list_directory or read_file to scan project root directory
-2. **Include directories** with:
-   - Source code files (.py, .js, etc.)
-   - Project-specific logic
-   
-3. **Exclude directories** like:
-   - `.git`, `.vscode` (configuration)
-   - `venv`, `node_modules` (dependencies)
-   - `build`, `dist` (outputs)
-   - `docs` (documentation)
+## III. Identifying Code Root Directories
+
+**Goal:** Identify top-level directories for project's source code, *excluding* documentation, third-party libraries, virtual environments, build directories, and configuration directories.
+
+**Heuristics and Steps:**
+1. **Initial Scan:** Read the contents of the project root directory (where `memorybankrules` is located).
+2. **Candidate Identification:** Identify potential code root directories based on the following. Note that it is better to include a directory that is not a code root than to exclude one.
+   - **Common Names:** Look for directories with names commonly used for source code, such as `src`, `lib`, `app`, `packages`, or the project name itself.
+   - **Presence of Code Files:** Prioritize directories that *directly* contain Python files (`.py`) or other code files relevant to the project (e.g., `.js`, `.ts`, `.java`, `.cpp`, etc.).
+   - **Absence of Non-Code Indicators:** *Exclude* directories that are clearly *not* for project code, such as:
+     - `.git`, `.svn`, `.hg` (version control)
+     - `docs`, `documentation` (documentation)
+     - `venv`, `env`, `.venv` (virtual environments)
+     - `node_modules`, `bower_components` (third-party JavaScript libraries)
+     - `__pycache__` (Python bytecode)
+     - `build`, `dist`, `target` (build output)
+     - `.vscode`, `.idea` (IDE configuration)
+     - `3rd_party_docs` (documentation for external libraries)
+     - Directories containing primarily configuration files (`.ini`, `.yaml`, `.toml`, `.json`) *unless* those files are clearly part of your project's core logic.
+   - **Structure**: If you see a nested structure, with files in folders inside the src folder, such as `src/module1/file1.py`, include `src` and not `src/module1`.
+3. **Chain-of-Thought Reasoning:** For each potential directory, generate a chain of thought explaining *why* it is being considered (or rejected).
+4. **Update `memorybankrules` with `<CODE_ROOT_DIRECTORIES>`.** Make sure `next_action` is specified, e.g., "Generate Keys", or another setup step if incomplete.
+5. **MUP**: Follow the Mandatory Update Protocol.
+
+**Example Chain of Thought:**
+"Scanning the project root, I see directories: `.vscode`, `docs`, `cline_docs`, `src`, `cline_utils`, `venv`. `.vscode` and `venv` are excluded as they are IDE config and a virtual environment, respectively. `docs` and `cline_docs` are excluded as they are documentation. `src` contains Python files directly, so it's a strong candidate. `cline_utils` also contains `.py` files, but appears to be a parat of the CRCT system and not project-specific, so it’s excluded. Therefore, I will add `src` and not `cline_utils` to the `[CODE_ROOT_DIRECTORIES]` section of `memorybankrules`."
+
+---
+
+## IV. Identifying Documentation Directories
+
+**Goal:** Identify directories containing project documentation, excluding source code, tests, build artifacts, and configuration.
+
+**Heuristics and Steps:**
+1. **Initial Scan:** Read the contents of the project root directory.
+2. **Candidate Identification:** Identify potential documentation directories based on:
+   - **Common Names:** Look for directories with names like `docs`, `documentation`, `wiki`, `manuals`, or project-specific documentation folders.
+   - **Content Types:** Prioritize directories containing Markdown (`.md`), reStructuredText (`.rst`), HTML, or other documentation formats.
+   - **Absence of Code Indicators:** Exclude directories that primarily contain code files.
+3. **Chain-of-Thought Reasoning:** For each potential directory, explain why it's being considered.
+4. **Update `memorybankrules` with `[DOC_DIRECTORIES]`.**
+5. **MUP:** Follow the Mandatory Update Protocol.
+
+**Example Chain of Thought:**
+"Scanning the project root, I see directories: `docs`, `documentation`, `src`, `tests`. `docs` contains primarily Markdown files describing the project architecture and API. `documentation` contains user guides in HTML format. Both appear to be documentation directories. `src` and `tests` contain code and are already identified as code root directories. Therefore, I will add `docs` and `documentation` to the `[DOC_DIRECTORIES]` section of `memorybankrules`."
 
 4. Use write_file or edit_file to update `memorybankrules.md`:
    ```
@@ -86,7 +133,7 @@ REQUIRED_BEFORE_TRANSITION: User Action Required
    read_file("memorybankrules.md")
    ```
 
-## DEPENDENCY TRACKER CREATION
+## V. DEPENDENCY TRACKER CREATION
 
 1. Use write_file to create tracker structure:
    ```
@@ -102,7 +149,7 @@ REQUIRED_BEFORE_TRANSITION: User Action Required
 5. Use edit_file to update MATRIX with appropriate symbols
 6. Verify all updates using read_file
 
-## SETUP/MAINTENANCE MUP - REQUIRED FILE MODIFICATIONS
+## VI. SETUP/MAINTENANCE MUP - REQUIRED FILE MODIFICATIONS
 
 After EVERY significant action in the Setup/Maintenance phase, you MUST:
 
@@ -138,7 +185,7 @@ After EVERY significant action in the Setup/Maintenance phase, you MUST:
    read_file("memory-bank/changelog.md")
    ```
 
-## CHECKPOINTS BEFORE TRANSITION
+## VII. CHECKPOINTS BEFORE TRANSITION
 
 Before transitioning to Strategy phase, use read_file to verify:
 <TRANSITION_CHECKLIST>
@@ -149,7 +196,7 @@ Before transitioning to Strategy phase, use read_file to verify:
 [ ] Used write_file or edit_file to update `memorybankrules.md` with NEXT_PHASE: Strategy
 </TRANSITION_CHECKLIST>
 
-## REQUIRED RESPONSE FORMAT
+## VIII. REQUIRED RESPONSE FORMAT
 
 All responses after completing an action MUST end with verification of actual file modifications:
 

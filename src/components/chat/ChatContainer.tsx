@@ -61,13 +61,10 @@ const ChatContainer: React.FC = () => {
   };
 
   return (
-    <Card className="flex flex-col h-full max-h-screen w-full max-w-3xl mx-auto shadow-lg bg-background">
-      {/* Header with controls */}
+    <Card className="flex flex-col h-full max-h-screen w-full max-w-3xl mx-auto shadow-lg bg-background">      {/* Header with controls */}
       <div className="flex items-center justify-between p-4 border-b border-border">
         <h2 className="text-lg font-semibold">Diagnosis Assistant</h2>
         <div className="space-x-2">
-          <NewDiagnosisButton />
-          <button className="px-3 py-1 rounded bg-muted hover:bg-muted/80">Export</button>
           <button
             onClick={handleSaveSession}
             className="px-3 py-1 rounded bg-muted hover:bg-muted/80"

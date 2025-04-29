@@ -2,12 +2,16 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Button } from "@/components/ui/button";
+import { Menu, Sun, Moon } from "lucide-react";
 import { useEffect, useState, useRef } from 'react';
 import { useSessionStore } from '@/store/useSessionStore';
 import { useChatStore } from '@/store/useChatStore';
 import HistoryView from '@/components/history/HistoryView';
 import SessionViewer from '@/components/history/SessionViewer';
 import SessionNavigation from '@/components/navigation/SessionNavigation';
+import NewDiagnosisButton from '@/components/session/NewDiagnosisButton';
+import ExportButton from '@/components/session/ExportButton';
+import Breadcrumbs from '@/components/navigation/Breadcrumbs';
 import { AnimatePresence, motion } from 'framer-motion';
 
 const geistSans = Geist({
@@ -28,6 +32,7 @@ export default function RootLayout({
   const [isDark, setIsDark] = useState(false);
   const [viewMode, setViewMode] = useState<'chat' | 'history' | 'viewer'>('chat');
   const [loading, setLoading] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const mainRef = useRef<HTMLDivElement>(null);
   const createNewSession = useSessionStore((state) => state.createNewSession);
   const messages = useChatStore((state) => state.messages);
@@ -78,37 +83,69 @@ export default function RootLayout({
               onViewChange={handleViewChange}
             />
             <nav className="flex flex-col gap-4 mb-4 mt-4">
-              <Button variant="outline" onClick={handleNewDiagnosis}>New Diagnosis</Button>
-              <Button variant="outline">Export</Button>
+              <NewDiagnosisButton variant="outline" />
+              <ExportButton variant="outline" />
             </nav>
-            <Button size="sm" onClick={() => setIsDark(!isDark)}>
-              Toggle {isDark ? 'Light' : 'Dark'} Mode
+            <Button 
+              size="sm" 
+              variant="ghost"
+              onClick={() => setIsDark(!isDark)}
+              className="flex items-center gap-2"
+              aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
+            >
+              {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+              {isDark ? 'Light' : 'Dark'} Mode
             </Button>
           </aside>
 
           {/* Mobile top nav */}
           <header className="flex md:hidden flex-col gap-2 p-4 border-b border-gray-300 dark:border-gray-700">
             <div className="flex justify-between items-center">
-              <h1 className="font-semibold">Diagnosis App</h1>
-              <Button size="sm" onClick={() => setIsDark(!isDark)}>
-                {isDark ? 'Light' : 'Dark'}
+              <div className="flex items-center gap-2">
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className="p-1"
+                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                  aria-label="Toggle mobile menu"
+                >
+                  <Menu className="h-5 w-5" />
+                </Button>
+                <h1 className="font-semibold">Diagnosis App</h1>
+              </div>
+              <Button 
+                size="icon" 
+                variant="ghost" 
+                onClick={() => setIsDark(!isDark)}
+                aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
+              >
+                {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
               </Button>
             </div>
+            
+            {/* Mobile navigation tabs */}
             <SessionNavigation
               currentView={viewMode === 'viewer' ? 'history' : viewMode}
-              onViewChange={handleViewChange}
+              onViewChange={(view) => {
+                handleViewChange(view);
+                setMobileMenuOpen(false);
+              }}
             />
-            <div className="flex gap-3 mt-2">
-              <Button size="sm" variant="outline" onClick={handleNewDiagnosis}>New</Button>
-              <Button size="sm" variant="outline">Export</Button>
-            </div>
+            
+            {/* Mobile dropdown menu */}
+            {mobileMenuOpen && (
+              <div className="flex flex-col gap-2 mt-2 p-2 bg-background border border-border rounded-md shadow-lg">
+                <NewDiagnosisButton size="sm" />
+                <ExportButton size="sm" />
+              </div>
+            )}
           </header>
 
           {/* Main content */}
           <main
             ref={mainRef}
             tabIndex={-1}
-            className="flex-1 p-4 overflow-y-auto outline-none"
+            className="flex-1 p-4 md:p-6 lg:p-8 overflow-y-auto outline-none"
           >
             <AnimatePresence mode="wait">
               {loading ? (
@@ -128,18 +165,12 @@ export default function RootLayout({
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                 >
-                  {viewMode === 'viewer' && (
-                    <div className="flex items-center gap-2 mb-4">
-                      <button
-                        onClick={() => handleViewChange('history')}
-                        className="text-blue-600 hover:underline"
-                      >
-                        ← Back to History
-                      </button>
-                      <span className="text-gray-500">/</span>
-                      <span className="font-semibold">Session Viewer</span>
-                    </div>
-                  )}
+                  {/* Consistent breadcrumb navigation */}
+                  <Breadcrumbs 
+                    currentView={viewMode}
+                    onNavigate={handleViewChange}
+                  />
+                  
                   {viewMode === 'history' && <HistoryView onSelectSession={() => setViewMode('viewer')} />}
                   {viewMode === 'viewer' && <SessionViewer onViewChange={handleViewChange} />}
                   {viewMode === 'chat' && children}

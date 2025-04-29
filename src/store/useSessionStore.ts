@@ -34,6 +34,9 @@ export const useSessionStore = create<SessionStore>()(
 
       createNewSession: (title, messages) => {
         if (messages && messages.length === 0) {
+          if (typeof window !== 'undefined') {
+            alert('Cannot create a new session without any messages.');
+          }
           console.log('Skipped creating empty session');
           return null;
         }

@@ -6,7 +6,17 @@ import { useSessionStore } from "@/store/useSessionStore";
 import { useChatStore } from "@/store/useChatStore";
 
 
-const NewDiagnosisButton: React.FC = () => {
+interface NewDiagnosisButtonProps {
+  variant?: "default" | "outline" | "ghost" | "link" | "destructive" | "secondary";
+  size?: "default" | "sm" | "lg" | "icon";
+  className?: string;
+}
+
+const NewDiagnosisButton: React.FC<NewDiagnosisButtonProps> = ({
+  variant = "outline",
+  size = "default",
+  className = ""
+}) => {
   const saveCurrentSession = useSessionStore((s) => s.saveCurrentSession);
   const createNewSession = useSessionStore((s) => s.createNewSession);
   const messages = useChatStore((s) => s.messages);
@@ -42,15 +52,16 @@ const NewDiagnosisButton: React.FC = () => {
       startTime: Date.now(),
     });
   };
-
   return (
     <Button
       onClick={handleClick}
-      className="flex items-center gap-2 px-4 py-2 rounded-md border border-gray-300 hover:bg-gray-100 transition"
+      variant={variant}
+      size={size}
+      className={`flex items-center gap-2 min-h-[44px] ${className}`}
       aria-label="Start a new diagnosis session"
     >
       <Plus className="w-4 h-4" />
-      New Diagnosis
+      {size !== "sm" ? "New Diagnosis" : "New"}
     </Button>
   );
 };

@@ -17,13 +17,13 @@ The app currently has some potential issues with error handling, empty sessions,
 
 ## Steps
 
-### 1. Enhance Empty Session Handling
-- Audit all places where sessions are created, saved, or resumed
-- Add consistent validation checks to prevent empty session creation
-- Implement user-friendly error messages when attempting to create empty sessions
-- Ensure the UI properly reflects when actions can't be performed due to empty sessions
+1. ✅ Enhance Empty Session Handling
+   - Audit all places where sessions are created, saved, or resumed
+   - Add consistent validation checks to prevent empty session creation
+   - Implement user-friendly error messages when attempting to create empty sessions
+   - Ensure the UI properly reflects when actions can't be performed due to empty sessions
 
-### 2. Improve Error Handling in API Calls
+2. ⬜ Improve Error Handling in API Calls
 - Implement more granular error types for different API failure scenarios
 - Add retry mechanism for network errors with exponential backoff
 - Create a more user-friendly error display with actionable advice

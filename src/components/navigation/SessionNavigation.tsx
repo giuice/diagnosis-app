@@ -28,7 +28,7 @@ export const SessionNavigation: React.FC<SessionNavigationProps> = ({ onViewChan
 
   return (
     <div
-      className="flex justify-center gap-4 p-2 border-b border-gray-300 dark:border-gray-700"
+      className="flex justify-center gap-2 md:gap-4 p-2 border-b border-gray-300 dark:border-gray-700"
       role="tablist"
       aria-label="Session navigation"
     >
@@ -38,7 +38,7 @@ export const SessionNavigation: React.FC<SessionNavigationProps> = ({ onViewChan
         variant={currentView === "chat" ? "default" : "outline"}
         onClick={() => onViewChange("chat")}
         aria-current={currentView === "chat" ? "page" : undefined}
-        className="focus-visible:ring-2 focus-visible:ring-offset-2"
+        className="focus-visible:ring-2 focus-visible:ring-offset-2 min-w-[44px] min-h-[44px]"
       >
         Active Chat
       </Button>
@@ -48,7 +48,7 @@ export const SessionNavigation: React.FC<SessionNavigationProps> = ({ onViewChan
         variant={currentView === "history" ? "default" : "outline"}
         onClick={() => onViewChange("history")}
         aria-current={currentView === "history" ? "page" : undefined}
-        className="focus-visible:ring-2 focus-visible:ring-offset-2"
+        className="focus-visible:ring-2 focus-visible:ring-offset-2 min-w-[44px] min-h-[44px]"
       >
         History
       </Button>
